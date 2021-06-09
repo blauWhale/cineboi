@@ -26,36 +26,25 @@ import ch.bbcag.cineboi.model.Film;
 public class MainActivity extends AppCompatActivity {
 
     private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&year=2021";
-    public static String[] eatFoodyImages = {
-            "http://i.imgur.com/rFLNqWI.jpg",
-            "http://i.imgur.com/C9pBVt7.jpg",
-            "http://i.imgur.com/rT5vXE1.jpg",
-            "http://i.imgur.com/aIy5R2k.jpg",
-            "http://i.imgur.com/MoJs9pT.jpg",
-            "http://i.imgur.com/S963yEM.jpg",
-            "http://i.imgur.com/rLR2cyc.jpg",
-            "http://i.imgur.com/SEPdUIx.jpg",
-            "http://i.imgur.com/aC9OjaM.jpg",
-            "http://i.imgur.com/76Jfv9b.jpg",
-            "http://i.imgur.com/fUX7EIB.jpg",
-            "http://i.imgur.com/syELajx.jpg",
-            "http://i.imgur.com/COzBnru.jpg",
-            "http://i.imgur.com/Z3QjilA.jpg",
+    public static String[] FilmImages = {
+            "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/xrAaJAn3hqkInq5kE1AGJqIGXyT.jpg",
+            "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/z2UtGA1WggESspi6KOXeo66lvLx.jpg",
+            "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/h8Rb9gBr48ODIwYUttZNYeMWeUU.jpg",
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Discover");
-        getFilmPosters();
-        GridView listView = (GridView) findViewById(R.id.usage_example_gridview);
-        listView.setAdapter(
-                new ImageListAdapter(MainActivity.this, eatFoodyImages)
+        //getFilmPosters();
+        GridView gridView = (GridView) findViewById(R.id.gridview);
+        gridView.setAdapter(
+                new ImageListAdapter(MainActivity.this, FilmImages)
         );
     }
 
 
-    private void getFilmPosters()
+    private void getFilmPosters(String url)
     {
         final ArrayAdapter<Film> filmAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_gallery_item);
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
@@ -66,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
                         ArrayList<Film> films = TMDB_Parser.createFilmFromJsonString(response);
                         filmAdapter.addAll(films);
                         // verwende die gemerkte Id auf der folgenden Seite
-                        ListView filmList = findViewById(R.id.filmlist);
-                        filmList.setAdapter(filmAdapter);
+                       // ListView filmList = findViewById(R.id.filmlist);
+                        //filmList.setAdapter(filmAdapter);
                     } catch (JSONException e) {
                         generateAlertDialog();
                         e.printStackTrace();

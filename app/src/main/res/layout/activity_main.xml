@@ -34,22 +34,19 @@
             android:text="test3" />
     </com.google.android.material.tabs.TabLayout>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="409dp"
+        android:layout_height="681dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <GridView
-        android:id="@+id/usage_example_gridview"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="2"/>
+        android:numColumns="3"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
