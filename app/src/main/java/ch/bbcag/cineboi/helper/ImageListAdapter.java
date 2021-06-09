@@ -1,6 +1,5 @@
 package ch.bbcag.cineboi.helper;
 
-import android.annotation.Nullable;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

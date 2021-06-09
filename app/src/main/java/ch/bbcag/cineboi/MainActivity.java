@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import com.android.volley.Request;
@@ -30,7 +31,11 @@ public class MainActivity extends AppCompatActivity {
         getFilmPosters(API_URL + api_query);
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getFilmPosters(API_URL + api_query);
+    }
 
     private void getFilmPosters(String url)
     {
@@ -83,5 +88,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void setApi_query(String api_query) {
         this.api_query = api_query;
+    }
+
+    public void filterGenres(View view) {
+        setApi_query(getApi_query() + "&with_genres=28");
+        onStart();
+    }
+
+    public void filterCountries(View view) {
+        setApi_query(getApi_query() + "&region=ch");
+        onStart();
+    }
+
+    public void filterRelease(View view) {
+        setApi_query("year=2020");
+        onStart();
     }
 }
