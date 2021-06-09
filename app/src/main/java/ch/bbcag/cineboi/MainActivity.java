@@ -25,7 +25,9 @@ import ch.bbcag.cineboi.model.Film;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&year=2021";
+    private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&";
+    private String api_query = "year=1998";
+    private static final String IMAGE_PATH = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2";
     public static String[] FilmImages = {
             "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/xrAaJAn3hqkInq5kE1AGJqIGXyT.jpg",
             "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/z2UtGA1WggESspi6KOXeo66lvLx.jpg",
@@ -36,27 +38,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Discover");
-        //getFilmPosters();
-        GridView gridView = (GridView) findViewById(R.id.gridview);
-        gridView.setAdapter(
-                new ImageListAdapter(MainActivity.this, FilmImages)
-        );
+        getFilmPosters(API_URL + api_query);
+//        GridView gridView = (GridView) findViewById(R.id.gridview);
+//        gridView.setAdapter(
+//                new ImageListAdapter(MainActivity.this, FilmImages)
+//        );
     }
 
 
     private void getFilmPosters(String url)
     {
-        final ArrayAdapter<Film> filmAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_gallery_item);
+        //final ArrayAdapter<Film> filmAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_gallery_item);
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
                         ArrayList<Film> films = TMDB_Parser.createFilmFromJsonString(response);
-                        filmAdapter.addAll(films);
                         // verwende die gemerkte Id auf der folgenden Seite
-                       // ListView filmList = findViewById(R.id.filmlist);
-                        //filmList.setAdapter(filmAdapter);
+                        ArrayList<String> posterPaths = new ArrayList<>();
+                        for (Film film: films) {
+                            posterPaths.add(IMAGE_PATH + film.getPoster_Path());
+                        }
+                        String posterPathArray[] = new String[posterPaths.size()];
+                        for(int j =0;j<posterPaths.size();j++){
+                            posterPathArray[j] = posterPaths.get(j);
+                        }
+
+                        //ListView filmList = findViewById(R.id.filmlist);
+                        GridView gridView = (GridView) findViewById(R.id.gridview);
+                        gridView.setAdapter(
+                                new ImageListAdapter(MainActivity.this, posterPathArray)
+                        );
                     } catch (JSONException e) {
                         generateAlertDialog();
                         e.printStackTrace();
@@ -74,5 +87,14 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setMessage("Die Filme konnten nicht geladen werden. Versuche es später nochmals.").setTitle("Fehler");
         AlertDialog dialog = dialogBuilder.create();
         dialog.show();
+    }
+
+
+    public String getApi_query() {
+        return api_query;
+    }
+
+    public void setApi_query(String api_query) {
+        this.api_query = api_query;
     }
 }
