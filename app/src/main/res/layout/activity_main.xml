@@ -34,17 +34,22 @@
             android:text="test3" />
     </com.google.android.material.tabs.TabLayout>
 
-    <ListView
-        android:id="@+id/filmlist"
-        android:layout_width="wrap_content"
-        android:layout_height="681dp"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        tools:listitem="@android:layout/activity_list_item">
+        tools:srcCompat="@tools:sample/avatars" />
 
-    </ListView>
+    <GridView
+        android:id="@+id/usage_example_gridview"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

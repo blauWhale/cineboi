@@ -12,9 +12,7 @@ import ch.bbcag.cineboi.model.Film;
 public class TMDB_Parser {
 
     public static ArrayList<Film> createFilmFromJsonString(String filmJsonString) throws JSONException {
-
         JSONObject jsonObj = new JSONObject(filmJsonString);
-        //JSONArray results = jsonObj.getJSONArray("results");
         JSONArray results = jsonObj.getJSONArray("results");
         ArrayList<Film> filmlist = new ArrayList<>();
         for(int i = 0; i < results.length(); i++)
@@ -26,8 +24,6 @@ public class TMDB_Parser {
             film.setPoster_Path(subObj.getString("poster_path"));
             filmlist.add(film);
         }
-
         return filmlist;
-
     }
 }
