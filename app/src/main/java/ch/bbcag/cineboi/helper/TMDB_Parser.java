@@ -3,10 +3,7 @@ package ch.bbcag.cineboi.helper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import ch.bbcag.cineboi.model.Film;
 
 public class TMDB_Parser {
@@ -25,5 +22,14 @@ public class TMDB_Parser {
             filmlist.add(film);
         }
         return filmlist;
+    }
+
+
+    public static Film getFilmDetailFromJsonString(String filmJsonString) throws JSONException {
+        JSONObject jsonObj = new JSONObject(filmJsonString);
+        Film film = new Film();
+        film.setName(jsonObj.getString("original_title"));
+        film.setPoster_Path(jsonObj.getString("poster_path"));
+        return film;
     }
 }

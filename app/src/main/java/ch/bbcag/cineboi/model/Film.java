@@ -1,10 +1,5 @@
 package ch.bbcag.cineboi.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ch.bbcag.cineboi.R;
-
 public class Film {
     private int id;
     private String name, poster_Path;
