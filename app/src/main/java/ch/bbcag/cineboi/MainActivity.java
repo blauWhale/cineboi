@@ -26,7 +26,7 @@ import ch.bbcag.cineboi.model.Film;
 public class MainActivity extends AppCompatActivity {
 
     private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&";
-    private String api_query = "year=1998";
+    private String api_query = "year=2004";
     private static final String IMAGE_PATH = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2";
     public static String[] FilmImages = {
             "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/xrAaJAn3hqkInq5kE1AGJqIGXyT.jpg",
@@ -38,11 +38,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("Discover");
+        getSupportActionBar().hide();
         getFilmPosters(API_URL + api_query);
-//        GridView gridView = (GridView) findViewById(R.id.gridview);
-//        gridView.setAdapter(
-//                new ImageListAdapter(MainActivity.this, FilmImages)
-//        );
     }
 
 
