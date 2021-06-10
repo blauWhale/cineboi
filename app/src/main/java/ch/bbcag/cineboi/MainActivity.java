@@ -1,6 +1,8 @@
 package ch.bbcag.cineboi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&";
     private static final String API_URL_GENRE = "https://api.themoviedb.org/3/genre/movie/list?api_key=fa11728f6e81c5f05fb42f521fb71283";
+    private static final String API_ADDITION_GENRE = "&with_genres=";
     private String api_query = "year=2004";
     private BottomSheetDialog bottomSheetDialog;
 
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 response -> {
                     try {
                         HashMap<String, String> genres = TMDB_Parser.getFilmGenresFromJsonString(response);
-                        generateView(genres);
+                        generateView(genres, API_ADDITION_GENRE);
 
                     } catch (JSONException e) {
                         generateAlertDialog();
@@ -125,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    private void generateView(HashMap<String, String> genres) {
-        Iterator it = genres.entrySet().iterator();
+    private void generateView(HashMap<String, String> map, String searchItem) {
+        Iterator it = map.entrySet().iterator();
         bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_persistent);
         LinearLayout bottomsheetcontainer = bottomSheetDialog.findViewById(R.id.bottom_sheet);
@@ -139,12 +142,14 @@ public class MainActivity extends AppCompatActivity {
 
             TextView textView = new TextView(this);
             textView.setText((String) pair.getValue());
+            textView.setPaddingRelative(8,8,8,8);
+            textView.setTextSize(25);
             linearLayout.addView(textView);
 
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setApi_query(getApi_query() + "&with_genres=" + pair.getKey());
+                    setApi_query(getApi_query() + searchItem + pair.getKey());
                     getFilmPosters(API_URL + api_query);
                     bottomSheetDialog.hide();
                 }
