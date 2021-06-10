@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 response -> {
                     try {
                         ArrayList<Film> films = TMDB_Parser.createFilmFromJsonString(response);
-                        GridView gridView = (GridView) findViewById(R.id.gridview);
+                        GridView gridView = findViewById(R.id.gridview);
                         ImageListAdapter filmAdapter = new ImageListAdapter(MainActivity.this, films);
                         gridView.setAdapter(filmAdapter);
                         AdapterView.OnItemClickListener mListClickedHandler = (parent, v, position, id) -> {

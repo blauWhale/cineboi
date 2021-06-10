@@ -1,19 +1,11 @@
 package ch.bbcag.cineboi.model;
 
+import java.nio.file.attribute.PosixFileAttributes;
+
 public class Film {
     private int id;
-    private String name, poster_Path;
-    private static final String POSTER_PATH_URL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/";
-
-    public Film(int id, String name, String poster_Path) {
-        this.id = id;
-        this.name = name;
-        this.poster_Path = POSTER_PATH_URL + poster_Path;
-    }
-
-    public Film() {
-
-    }
+    private String name, poster_Path, overview, backdrop;
+    private static final String POSTER_PATH_URL = "https://www.themoviedb.org/t/p/w500";
 
     public void setId(int id) {
         this.id = id;
@@ -39,9 +31,19 @@ public class Film {
         return POSTER_PATH_URL+poster_Path;
     }
 
+    public String getOverview() {
+        return overview;
+    }
 
-    @Override
-    public String toString() {
-        return name;
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public String getBackdrop() {
+        return POSTER_PATH_URL+backdrop;
+    }
+
+    public void setBackdrop(String backdrop) {
+        this.backdrop = backdrop;
     }
 }

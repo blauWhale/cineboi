@@ -7,15 +7,16 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 
@@ -60,8 +61,16 @@ public class DetailActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, create_API_URL(this.id), response -> {
                     try {
                         Film film = TMDB_Parser.getFilmDetailFromJsonString(response);
-                        TextView title_s = findViewById(R.id.title_l);
+                        TextView title_s = findViewById(R.id.title_s);
+                        TextView title_l = findViewById(R.id.title_l);
+                        TextView overview = findViewById(R.id.overview);
                         title_s.setText(film.getName());
+                        title_l.setText(film.getName());
+                        overview.setText(film.getOverview());
+                        ImageView imageView2 = findViewById(R.id.poster2);
+                        ImageView imageView1 = findViewById(R.id.poster1);
+                        Glide.with(this).load(film.getPoster_Path()).into(imageView2);
+                        Glide.with(this).load(film.getBackdrop()).centerCrop().into(imageView1);
                     } catch (JSONException e) {
                         generateAlertDialog();
                         e.printStackTrace();
