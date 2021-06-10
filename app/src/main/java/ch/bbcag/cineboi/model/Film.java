@@ -36,12 +36,9 @@ public class Film {
     }
 
     public String getPoster_Path() {
-        return poster_Path;
+        return POSTER_PATH_URL+poster_Path;
     }
 
-    public static String getPosterPathUrl() {
-        return POSTER_PATH_URL;
-    }
 
     @Override
     public String toString() {

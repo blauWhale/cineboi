@@ -4,23 +4,25 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
+
 import ch.bbcag.cineboi.R;
+import ch.bbcag.cineboi.model.Film;
 
 public class ImageListAdapter extends ArrayAdapter {
     private Context context;
     private LayoutInflater inflater;
 
-    private String[] imageUrls;
+    private ArrayList<Film> imageUrls;
 
-    public ImageListAdapter(Context context, String[] imageUrls) {
-        super(context, R.layout.listview_item_image, imageUrls);
+    public ImageListAdapter(Context context, ArrayList<Film> films) {
+        super(context, R.layout.listview_item_image, films);
         this.context = context;
-        this.imageUrls = imageUrls;
-
+        this.imageUrls = films;
         inflater = LayoutInflater.from(context);
     }
 
@@ -30,7 +32,7 @@ public class ImageListAdapter extends ArrayAdapter {
             convertView = inflater.inflate(R.layout.listview_item_image, parent, false);
         }
 
-        Glide.with(context).load(imageUrls[position]).into((ImageView) convertView);
+        Glide.with(context).load(imageUrls.get(position).getPoster_Path()).into((ImageView) convertView);
 
         return convertView;
     }

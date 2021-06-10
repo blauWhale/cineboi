@@ -1,5 +1,6 @@
 package ch.bbcag.cineboi;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -36,8 +37,12 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
         String name = intent.getStringExtra("Filmname");
-        this.id = intent.getIntExtra("Film", 0);
+        this.id = intent.getIntExtra("FilmId", 0);
+        getFilmDetails();
         setTitle(name);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); }
 
     }
 
@@ -68,6 +73,7 @@ public class DetailActivity extends AppCompatActivity {
     public  String create_API_URL(int id){
         return "https://api.themoviedb.org/3/movie/" + id + "?api_key=fa11728f6e81c5f05fb42f521fb71283";
     }
+
     private void generateAlertDialog() {
         AlertDialog.Builder dialogBuilder;
         dialogBuilder = new AlertDialog.Builder(this);

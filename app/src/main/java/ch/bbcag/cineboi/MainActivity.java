@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,14 +22,14 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&";
     private String api_query = "year=2004";
-    private static final String IMAGE_PATH = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("Discover");
         getSupportActionBar().hide();
         getFilmPosters(API_URL + api_query);
+        setTitle("Discover");
     }
 
     @Override
@@ -44,25 +45,17 @@ public class MainActivity extends AppCompatActivity {
                 response -> {
                     try {
                         ArrayList<Film> films = TMDB_Parser.createFilmFromJsonString(response);
-                        ArrayList<String> posterPaths = new ArrayList<>();
-                        for (Film film: films) {
-                            posterPaths.add(IMAGE_PATH + film.getPoster_Path());
-                        }
-                        String[] posterPathArray = new String[posterPaths.size()];
-                        for(int j =0;j<posterPaths.size();j++){
-                            posterPathArray[j] = posterPaths.get(j);
-                        }
                         GridView gridView = (GridView) findViewById(R.id.gridview);
-                        //ImageListAdapter posts = new ImageListAdapter(MainActivity.this, posterPathArray);
-                        gridView.setAdapter(new ImageListAdapter(MainActivity.this, posterPathArray));
+                        ImageListAdapter filmAdapter = new ImageListAdapter(MainActivity.this, films);
+                        gridView.setAdapter(filmAdapter);
                         AdapterView.OnItemClickListener mListClickedHandler = (parent, v, position, id) -> {
                             Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                            Film selected = (Film)parent.getItemAtPosition(position);
+                            Film selected = (Film) parent.getItemAtPosition(position);
                             intent.putExtra("FilmId", selected.getId());
                             intent.putExtra("Filmname", selected.getName());
                             startActivity(intent);
                         };
-                        //posts.setOnItemClickListener(mListClickedHandler);
+                        gridView.setOnItemClickListener(mListClickedHandler);
                     } catch (JSONException e) {
                         generateAlertDialog();
                         e.printStackTrace();
