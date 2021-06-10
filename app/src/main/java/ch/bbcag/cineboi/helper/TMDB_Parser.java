@@ -32,6 +32,7 @@ public class TMDB_Parser {
         film.setPoster_Path(jsonObj.getString("poster_path"));
         film.setOverview(jsonObj.getString("overview"));
         film.setBackdrop(jsonObj.getString("backdrop_path"));
+        film.setInfo("Length:"+jsonObj.getString("runtime")+"min\nLanguage:" +jsonObj.getString("original_language"));
         return film;
     }
 }

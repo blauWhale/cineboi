@@ -28,8 +28,6 @@ import ch.bbcag.cineboi.model.Film;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private final String API_URL = "https://api.themoviedb.org/3/movie/635302?api_key=fa11728f6e81c5f05fb42f521fb71283";
-    private static final String IMAGE_PATH = "https://www.themoviedb.org/t/p/original";
     private int id;
 
     @Override
@@ -61,12 +59,12 @@ public class DetailActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, create_API_URL(this.id), response -> {
                     try {
                         Film film = TMDB_Parser.getFilmDetailFromJsonString(response);
-                        TextView title_s = findViewById(R.id.title_s);
                         TextView title_l = findViewById(R.id.title_l);
+                        TextView info = findViewById(R.id.info);
                         TextView overview = findViewById(R.id.overview);
-                        title_s.setText(film.getName());
                         title_l.setText(film.getName());
                         overview.setText(film.getOverview());
+                        info.setText(film.getInfo());
                         ImageView imageView2 = findViewById(R.id.poster2);
                         ImageView imageView1 = findViewById(R.id.poster1);
                         Glide.with(this).load(film.getPoster_Path()).into(imageView2);

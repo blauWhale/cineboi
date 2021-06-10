@@ -4,7 +4,7 @@ import java.nio.file.attribute.PosixFileAttributes;
 
 public class Film {
     private int id;
-    private String name, poster_Path, overview, backdrop;
+    private String name, poster_Path, overview, backdrop, info;
     private static final String POSTER_PATH_URL = "https://www.themoviedb.org/t/p/w500";
 
     public void setId(int id) {
@@ -45,5 +45,13 @@ public class Film {
 
     public void setBackdrop(String backdrop) {
         this.backdrop = backdrop;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 }

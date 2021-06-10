@@ -8,10 +8,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TabHost;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
+
 import org.json.JSONException;
 import java.util.ArrayList;
 import ch.bbcag.cineboi.helper.ImageListAdapter;
@@ -96,5 +102,17 @@ public class MainActivity extends AppCompatActivity {
     public void filterRelease(View view) {
         setApi_query("year=2020");
         onStart();
+    }
+
+    public void addOnTabSelectedListener (TabLayout.OnTabSelectedListener listener){
+
+
+    }
+    public void initializeTabNavigation(){
+        TabItem discover = findViewById(R.id.discover);
+        TabItem watchlist = findViewById(R.id.watchlist);
+        TabItem favorite = findViewById(R.id.favorite);
+
+
     }
 }

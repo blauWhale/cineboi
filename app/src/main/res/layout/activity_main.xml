@@ -17,15 +17,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="Discovery" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:srcCompat="@drawable/search_24" />-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:layout_marginEnd="16dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:srcCompat="@drawable/search_24" />-->
 
     <SearchView
         android:id="@+id/searchView"
@@ -56,16 +56,19 @@
         app:tabTextColor="#FFFFFF">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/discover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/ic_baselinel_fire_24" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/ic_baseline_star_24" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/watchlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/ic_baseline_favorite_24" />
