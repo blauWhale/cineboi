@@ -15,7 +15,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Discovery" />
+        app:title="@string/tab1_titel" />
 
     <!--    <ImageView-->
     <!--        android:id="@+id/imageView"-->

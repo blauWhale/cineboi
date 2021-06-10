@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import ch.bbcag.cineboi.model.Film;
 
 public class TMDB_Parser {
@@ -35,4 +37,17 @@ public class TMDB_Parser {
         film.setInfo("Length:"+jsonObj.getString("runtime")+"min\nLanguage:" +jsonObj.getString("original_language"));
         return film;
     }
+
+    public static HashMap<String, String> getFilmGenresFromJsonString(String filmJsonString) throws JSONException{
+        JSONObject jsonObj = new JSONObject(filmJsonString);
+        JSONArray results = jsonObj.getJSONArray("genres");
+        HashMap<String, String> genres = new HashMap<String, String>();
+        for(int i = 0; i < results.length(); i++)
+        {
+            JSONObject subObj = results.getJSONObject(i);
+            genres.put(subObj.getString("id"), subObj.getString("name"));
+        }
+        return genres;
+    }
+
 }

@@ -3,4 +3,9 @@
     <string name="title_activity_main2">MainActivity2</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="tab1_titel">Discovery</string>
+    <string name="genre_action">Action</string>
+    <string name="genre_documentary">Documentary</string>
+    <string name="genre_comedy">Comedy</string>
+    <string name="genre_thriller">Thriller</string>
 </resources>
