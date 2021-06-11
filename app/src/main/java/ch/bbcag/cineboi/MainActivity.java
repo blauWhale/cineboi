@@ -4,13 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TabHost;
 
 import android.widget.LinearLayout;
@@ -39,9 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&";
     private static final String API_URL_GENRE = "https://api.themoviedb.org/3/genre/movie/list?api_key=fa11728f6e81c5f05fb42f521fb71283";
+    private static final String API_URL_COUNTRIES = "https://api.themoviedb.org/3/watch/providers/regions?api_key=fa11728f6e81c5f05fb42f521fb71283";
     private static final String API_ADDITION_GENRE = "&with_genres=";
-    private String api_query = "year=2004";
+    private static final String API_ADDITION_COUNTRY = "&region=";
+    private String api_query = "sort_by=popularity.desc";
     private BottomSheetDialog bottomSheetDialog;
+    private LinearLayout bottomsheetcontainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +57,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         getFilmPosters(API_URL + api_query);
-        getGenres(API_URL_GENRE);
         setTitle("Discover");
 
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_persistent);
+        bottomsheetcontainer = bottomSheetDialog.findViewById(R.id.bottom_sheet);
+
+        SearchView simpleSearchView = (SearchView) findViewById(R.id.searchView);
+        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                api_query = "&query=" + simpleSearchView.getQuery();
+                getFilmPosters(API_URL + api_query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+
+        });
     }
 
     @Override
@@ -107,9 +132,6 @@ public class MainActivity extends AppCompatActivity {
         this.api_query = api_query;
     }
 
-    public void filterGenres(View view) {
-        bottomSheetDialog.show();
-    }
 
     private void getGenres(String url)
     {
@@ -118,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 response -> {
                     try {
                         HashMap<String, String> genres = TMDB_Parser.getFilmGenresFromJsonString(response);
-                        generateView(genres, API_ADDITION_GENRE);
+                        generateView(genres, API_ADDITION_GENRE, R.id.genre_filter);
 
                     } catch (JSONException e) {
                         generateAlertDialog();
@@ -128,11 +150,26 @@ public class MainActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    private void generateView(HashMap<String, String> map, String searchItem) {
+    private void getCountries(String url)
+    {
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> {
+                    try {
+                        HashMap<String, String> countries = TMDB_Parser.getFilmCountriesFromJsonString(response);
+                        generateView(countries, API_ADDITION_COUNTRY, R.id.country_filter);
+
+                    } catch (JSONException e) {
+                        generateAlertDialog();
+                        e.printStackTrace();
+                    }
+                }, error -> generateAlertDialog());
+        queue.add(stringRequest);
+    }
+
+    private void generateView(HashMap<String, String> map, String searchItem, int idButton) {
         Iterator it = map.entrySet().iterator();
-        bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_persistent);
-        LinearLayout bottomsheetcontainer = bottomSheetDialog.findViewById(R.id.bottom_sheet);
+
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
 
@@ -152,22 +189,36 @@ public class MainActivity extends AppCompatActivity {
                     setApi_query(getApi_query() + searchItem + pair.getKey());
                     getFilmPosters(API_URL + api_query);
                     bottomSheetDialog.hide();
+                    Button btn = (Button) findViewById(idButton);
+                    btn.setText(pair.getValue().toString());
+
+                    Button resetbtn = (Button) findViewById(R.id.reset_button);
+                    resetbtn.setVisibility(View.VISIBLE);
                 }
 
             });
-
             bottomsheetcontainer.addView(linearLayout);
         }
     }
 
+
+    public void filterGenres(View view) {
+        bottomsheetcontainer.removeAllViews();
+        getGenres(API_URL_GENRE);
+        bottomSheetDialog.show();
+
+    }
+
     public void filterCountries(View view) {
-        setApi_query(getApi_query() + "&region=ch");
-        onStart();
+        bottomsheetcontainer.removeAllViews();
+        getCountries(API_URL_COUNTRIES);
+        bottomSheetDialog.show();
+
     }
 
     public void filterRelease(View view) {
-        setApi_query("year=2020");
-        onStart();
+        setApi_query("year=2021");
+        getFilmPosters(API_URL + api_query);
     }
 
     public void addOnTabSelectedListener (TabLayout.OnTabSelectedListener listener){
@@ -181,4 +232,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void filterReset(View view) {
+        setApi_query("sort_by=popularity.desc");
+        getFilmPosters(API_URL + api_query);
+
+        Button btn = (Button) findViewById(R.id.genre_filter);
+        btn.setText(R.string.button_genre);
+
+        Button btn2 = (Button) findViewById(R.id.country_filter);
+        btn2.setText(R.string.button_countries);
+
+        Button resetbtn = (Button) findViewById(R.id.reset_button);
+        resetbtn.setVisibility(View.INVISIBLE);
+    }
+
 }

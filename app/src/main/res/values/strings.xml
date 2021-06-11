@@ -8,4 +8,8 @@
     <string name="genre_documentary">Documentary</string>
     <string name="genre_comedy">Comedy</string>
     <string name="genre_thriller">Thriller</string>
+    <string name="button_genre">Genre</string>
+    <string name="button_countries">Country</string>
+    <string name="button_release_year">Year</string>
+    <string name="reset_button">Reset</string>
 </resources>

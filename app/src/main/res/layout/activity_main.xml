@@ -38,7 +38,7 @@
         android:queryHint="Search Film"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.google.android.material.tabs.TabLayout
@@ -78,12 +78,12 @@
         android:id="@+id/gridview"
         android:layout_width="wrap_content"
         android:layout_height="557dp"
+        android:layout_margin="2dp"
         android:layout_marginTop="8dp"
         android:numColumns="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/country_filter"
-        android:layout_margin="2dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/country_filter" />
 
     <Button
         android:id="@+id/genre_filter"
@@ -91,22 +91,23 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="8dp"
-        android:text="Genre"
+        android:onClick="filterGenres"
+        android:text="@string/button_genre"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        android:onClick="filterGenres" />
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
     <Button
         android:id="@+id/country_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Country"
+        android:onClick="filterCountries"
+        android:text="@string/button_countries"
         app:layout_constraintEnd_toEndOf="@+id/release_filter"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/genre_filter"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        android:onClick="filterCountries"/>
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
 
     <Button
         android:id="@+id/release_filter"
@@ -114,11 +115,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="28dp"
-        android:text="Release"
+        android:onClick="filterRelease"
+        android:text="@string/button_release_year"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        android:onClick="filterRelease"/>
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
+    <Button
+        android:id="@+id/reset_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="filterReset"
+        android:text="@string/reset_button"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

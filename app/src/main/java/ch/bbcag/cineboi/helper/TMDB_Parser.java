@@ -49,5 +49,16 @@ public class TMDB_Parser {
         }
         return genres;
     }
+    public static HashMap<String, String> getFilmCountriesFromJsonString(String filmJsonString) throws JSONException{
+        JSONObject jsonObj = new JSONObject(filmJsonString);
+        JSONArray results = jsonObj.getJSONArray("results");
+        HashMap<String, String> countries = new HashMap<String, String>();
+        for(int i = 0; i < results.length(); i++)
+        {
+            JSONObject subObj = results.getJSONObject(i);
+            countries.put(subObj.getString("iso_3166_1"), subObj.getString("native_name"));
+        }
+        return countries;
+    }
 
 }
