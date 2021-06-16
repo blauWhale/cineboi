@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.SearchView;
 import android.widget.TabHost;
 
@@ -217,8 +218,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void filterRelease(View view) {
-        setApi_query("year=2021");
-        getFilmPosters(API_URL + api_query);
+        NumberPicker np = findViewById(R.id.numberPicker);
+        np.setMinValue(1900);
+        np.setMaxValue(2100);
+        np.setValue(2021);
+        Button ok = (Button) findViewById(R.id.yearpicker_button);
+        np.setVisibility(View.VISIBLE);
+        ok.setVisibility(View.VISIBLE);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int yearValue = np.getValue();
+                setApi_query(getApi_query()+ "&year="+ yearValue);
+                Button btn = (Button) findViewById(R.id.release_filter);
+                btn.setText(Integer.toString(np.getValue()));
+                //np.setValue(yearValue);
+                getFilmPosters(API_URL + api_query);
+                np.setVisibility(View.INVISIBLE);
+                ok.setVisibility(View.INVISIBLE);
+                Button resetbtn = (Button) findViewById(R.id.reset_button);
+                resetbtn.setVisibility(View.VISIBLE);
+
+            }
+    });
+
     }
 
     public void addOnTabSelectedListener (TabLayout.OnTabSelectedListener listener){
@@ -242,6 +265,9 @@ public class MainActivity extends AppCompatActivity {
 
         Button btn2 = (Button) findViewById(R.id.country_filter);
         btn2.setText(R.string.button_countries);
+
+        Button btn3 = (Button) findViewById(R.id.release_filter);
+        btn3.setText(R.string.button_release_year);
 
         Button resetbtn = (Button) findViewById(R.id.reset_button);
         resetbtn.setVisibility(View.INVISIBLE);
