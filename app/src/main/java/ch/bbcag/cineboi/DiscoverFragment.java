@@ -72,6 +72,13 @@ public class DiscoverFragment extends Fragment{
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if(newText.equals("")){
+                    getFilmPosters(API_URL + api_query);
+                }
+                else{
+                    api_query = API_ADDITION_SEARCH + simpleSearchView.getQuery();
+                    getFilmPosters(API_URL_SEARCH + api_query);
+                }
                 return false;
             }
         });
