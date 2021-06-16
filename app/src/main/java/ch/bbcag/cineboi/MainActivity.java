@@ -28,19 +28,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_star_24);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_baseline_favorite_24);
 
-        SearchView simpleSearchView = (SearchView) findViewById(R.id.searchView);
-        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                api_query = API_ADDITION_SEARCH + simpleSearchView.getQuery();
-                getFilmPosters(API_URL_SEARCH + api_query);
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
     }
 }

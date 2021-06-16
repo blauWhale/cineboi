@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +35,8 @@ public class DiscoverFragment extends Fragment{
     private static final String API_URL_COUNTRIES = "https://api.themoviedb.org/3/watch/providers/regions?api_key=fa11728f6e81c5f05fb42f521fb71283";
     private static final String API_ADDITION_GENRE = "&with_genres=";
     private static final String API_ADDITION_COUNTRY = "&region=";
+    private static final String API_URL_SEARCH = "https://api.themoviedb.org/3/search/movie?api_key=fa11728f6e81c5f05fb42f521fb71283";
+    private static final String API_ADDITION_SEARCH = "&query=";
     private String api_query = "sort_by=popularity.desc";
     private BottomSheetDialog bottomSheetDialog;
     private LinearLayout bottomsheetcontainer;
@@ -54,7 +57,20 @@ public class DiscoverFragment extends Fragment{
         btnCountry.setOnClickListener(this::filterCountries);
         btnGenre.setOnClickListener(this::filterGenres);
         btnYear.setOnClickListener(this::filterRelease);
+        SearchView simpleSearchView = getActivity().findViewById(R.id.searchView);
+        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                api_query = API_ADDITION_SEARCH + simpleSearchView.getQuery();
+                getFilmPosters(API_URL_SEARCH + api_query);
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return v;
     }
     private void getFilmPosters(String url)
