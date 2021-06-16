@@ -1,29 +1,11 @@
 package ch.bbcag.cineboi;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
+import android.widget.SearchView;
 import com.google.android.material.tabs.TabLayout;
-
-import org.json.JSONException;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import ch.bbcag.cineboi.databinding.ActivityMainBinding;
-import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,10 +22,25 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
         getSupportActionBar().hide();
+        setTitle("Cineboi");
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_baselinel_fire_24);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_star_24);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_baseline_favorite_24);
 
+        SearchView simpleSearchView = (SearchView) findViewById(R.id.searchView);
+        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                api_query = API_ADDITION_SEARCH + simpleSearchView.getQuery();
+                getFilmPosters(API_URL_SEARCH + api_query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 }
