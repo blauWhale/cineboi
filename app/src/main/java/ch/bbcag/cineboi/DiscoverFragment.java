@@ -3,6 +3,8 @@ package ch.bbcag.cineboi;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.SearchView;
 import android.widget.TextView;
 import com.android.volley.Request;
@@ -23,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import ch.bbcag.cineboi.databinding.ActivityMainBinding;
 import ch.bbcag.cineboi.helper.ImageListAdapter;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
@@ -54,9 +56,11 @@ public class DiscoverFragment extends Fragment{
         Button btnCountry = v.findViewById(R.id.country_filter);
         Button btnGenre = v.findViewById(R.id.genre_filter);
         Button btnYear = v.findViewById(R.id.release_filter);
+        Button btnReset = v.findViewById(R.id.reset_button);
         btnCountry.setOnClickListener(this::filterCountries);
         btnGenre.setOnClickListener(this::filterGenres);
         btnYear.setOnClickListener(this::filterRelease);
+        btnReset.setOnClickListener(this::filterReset);
         SearchView simpleSearchView = getActivity().findViewById(R.id.searchView);
         simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -124,9 +128,38 @@ public class DiscoverFragment extends Fragment{
     }
 
     public void filterRelease(View view) {
-        setApi_query("year=2021");
-        getFilmPosters(API_URL + api_query);
+        ConstraintLayout constraintLayout = (ConstraintLayout) getActivity().findViewById(R.id.numberpicker_constraint);
+        constraintLayout.setVisibility(View.VISIBLE);
+        Button resetbtn = (Button) getActivity().findViewById(R.id.reset_button);
+        resetbtn.setVisibility(View.INVISIBLE);
+
+        NumberPicker np = getActivity().findViewById(R.id.numberPicker);
+        np.setMinValue(1900);
+        np.setMaxValue(2100);
+        np.setValue(2021);
+        Button ok = (Button) getActivity().findViewById(R.id.yearpicker_button);
+        np.setVisibility(View.VISIBLE);
+        ok.setVisibility(View.VISIBLE);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int yearValue = np.getValue();
+                setApi_query(getApi_query()+ "&year="+ yearValue);
+                Button btn = (Button) getActivity().findViewById(R.id.release_filter);
+                btn.setText(Integer.toString(np.getValue()));
+                //np.setValue(yearValue);
+                getFilmPosters(API_URL + api_query);
+                np.setVisibility(View.INVISIBLE);
+                ok.setVisibility(View.INVISIBLE);
+                Button resetbtn = (Button) getActivity().findViewById(R.id.reset_button);
+                constraintLayout.setVisibility(View.INVISIBLE);
+                resetbtn.setVisibility(View.VISIBLE);
+
+                }
+        });
+
     }
+
 
 
     public void filterReset(View view) {
@@ -138,6 +171,9 @@ public class DiscoverFragment extends Fragment{
 
         Button btn2 = (Button) getActivity().findViewById(R.id.country_filter);
         btn2.setText(R.string.button_countries);
+
+        Button btn3 = (Button) getActivity().findViewById(R.id.release_filter);
+        btn3.setText(R.string.button_release_year);
 
         Button resetbtn = (Button) getActivity().findViewById(R.id.reset_button);
         resetbtn.setVisibility(View.INVISIBLE);
