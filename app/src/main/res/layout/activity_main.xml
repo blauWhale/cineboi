@@ -83,7 +83,8 @@
         android:numColumns="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/country_filter" />
+        app:layout_constraintTop_toBottomOf="@+id/country_filter" >
+    </GridView>
 
     <Button
         android:id="@+id/genre_filter"
@@ -132,32 +133,56 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <NumberPicker
-        android:id="@+id/numberPicker"
-        android:layout_width="0dp"
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/numberpicker_constraint"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@color/purple_500"
+        app:layout_constraintTop_toTopOf="@id/gridview"
+        android:layout_marginLeft="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/gridview"
-        android:visibility="invisible"
-        android:background="@color/purple_200">
+        android:visibility="invisible">
 
-    </NumberPicker>
+        <NumberPicker
+            android:id="@+id/numberPicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/purple_200"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <Button
-        android:id="@+id/yearpicker_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_200"
-        android:text="OK"
-        app:layout_constraintEnd_toEndOf="@+id/gridview"
-        app:layout_constraintStart_toStartOf="@+id/gridview"
-        app:layout_constraintTop_toBottomOf="@+id/numberPicker"
-        android:visibility="invisible"/>
+        <Button
+            android:id="@+id/yearpicker_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_200"
+            android:text="OK"
+            app:layout_constraintTop_toBottomOf="@id/numberPicker"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:visibility="invisible"/>
+<!--            app:layout_constraintEnd_toEndOf="@+id/gridview"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/gridview"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/numberPicker"-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
 
 
 

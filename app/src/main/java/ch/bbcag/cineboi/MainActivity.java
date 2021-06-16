@@ -1,23 +1,17 @@
 package ch.bbcag.cineboi;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.SearchView;
-import android.widget.TabHost;
 
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&";
     private static final String API_URL_GENRE = "https://api.themoviedb.org/3/genre/movie/list?api_key=fa11728f6e81c5f05fb42f521fb71283";
     private static final String API_URL_COUNTRIES = "https://api.themoviedb.org/3/watch/providers/regions?api_key=fa11728f6e81c5f05fb42f521fb71283";
+    private static final String API_URL_SEARCH = "https://api.themoviedb.org/3/search/movie?api_key=fa11728f6e81c5f05fb42f521fb71283";
     private static final String API_ADDITION_GENRE = "&with_genres=";
     private static final String API_ADDITION_COUNTRY = "&region=";
+    private static final String API_ADDITION_SEARCH = "&query=";
     private String api_query = "sort_by=popularity.desc";
     private BottomSheetDialog bottomSheetDialog;
     private LinearLayout bottomsheetcontainer;
@@ -68,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                api_query = "&query=" + simpleSearchView.getQuery();
-                getFilmPosters(API_URL + api_query);
+                api_query = API_ADDITION_SEARCH + simpleSearchView.getQuery();
+                getFilmPosters(API_URL_SEARCH + api_query);
                 return false;
             }
 
@@ -218,6 +214,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void filterRelease(View view) {
+        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.numberpicker_constraint);
+        constraintLayout.setVisibility(View.VISIBLE);
+        Button resetbtn = (Button) findViewById(R.id.reset_button);
+        resetbtn.setVisibility(View.INVISIBLE);
+
         NumberPicker np = findViewById(R.id.numberPicker);
         np.setMinValue(1900);
         np.setMaxValue(2100);
@@ -236,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 getFilmPosters(API_URL + api_query);
                 np.setVisibility(View.INVISIBLE);
                 ok.setVisibility(View.INVISIBLE);
-                Button resetbtn = (Button) findViewById(R.id.reset_button);
+                constraintLayout.setVisibility(View.INVISIBLE);
                 resetbtn.setVisibility(View.VISIBLE);
 
             }
