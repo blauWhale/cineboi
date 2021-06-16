@@ -4,11 +4,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.GridView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,15 +20,19 @@ import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 
-import java.util.ArrayList;
-
-import ch.bbcag.cineboi.helper.ImageListAdapter;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
+import ch.bbcag.cineboi.room.AppDatabase;
+import ch.bbcag.cineboi.room.Item;
+import ch.bbcag.cineboi.room.ItemDAO;
 
 public class DetailActivity extends AppCompatActivity {
 
     private int id;
+    AppDatabase database = Room.databaseBuilder(this, AppDatabase.class, "cineboi.db")
+            .allowMainThreadQueries()
+            .build();
+    private Film film;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,7 @@ public class DetailActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, create_API_URL(this.id), response -> {
                     try {
-                        Film film = TMDB_Parser.getFilmDetailFromJsonString(response);
+                        film = TMDB_Parser.getFilmDetailFromJsonString(response);
                         TextView title_l = findViewById(R.id.title_l);
                         TextView info = findViewById(R.id.info);
                         TextView overview = findViewById(R.id.overview);
@@ -90,5 +94,12 @@ public class DetailActivity extends AppCompatActivity {
         dialogBuilder.setMessage("Die Filmdetails konnten nicht geladen werden. Versuche es später nochmals.").setTitle("Fehler");
         AlertDialog dialog = dialogBuilder.create();
         dialog.show();
+    }
+
+    public void addToFavFilm(View view) {
+        ItemDAO itemDAO = database.getItemDAO();
+        Item item = new Item();
+        item.setFilmID(film.getId());
+        itemDAO.insert();
     }
 }
