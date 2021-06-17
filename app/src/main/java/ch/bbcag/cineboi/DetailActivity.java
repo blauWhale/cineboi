@@ -2,36 +2,29 @@ package ch.bbcag.cineboi;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.room.Room;
 import android.app.AlertDialog;
-import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-
 import org.json.JSONException;
-
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
 import ch.bbcag.cineboi.room.AppDatabase;
-import ch.bbcag.cineboi.room.Item;
-import ch.bbcag.cineboi.room.ItemDAO;
+import ch.bbcag.cineboi.room.favFilmDAO;
 
 public class DetailActivity extends AppCompatActivity {
 
     private int id;
-    AppDatabase database = Room.databaseBuilder(this, AppDatabase.class, "cineboi.db")
-            .allowMainThreadQueries()
-            .build();
+    private AppDatabase database;
     private Film film;
 
     @Override
@@ -46,7 +39,7 @@ public class DetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true); }
-
+        database = Room.databaseBuilder(this, AppDatabase.class, "cineboi.db").allowMainThreadQueries().build();
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -97,9 +90,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void addToFavFilm(View view) {
-        ItemDAO itemDAO = database.getItemDAO();
-        Item item = new Item();
-        item.setFilmID(film.getId());
-        itemDAO.insert();
+        favFilmDAO favFilmDAO = database.getFavFilmDAO();
+        //favFilmDAO.insert(film.getId());
     }
 }

@@ -2,15 +2,9 @@ package ch.bbcag.cineboi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
-
-import android.arch.persistence.room.Room;
 import android.os.Bundle;
-import android.widget.SearchView;
 import com.google.android.material.tabs.TabLayout;
 import ch.bbcag.cineboi.databinding.ActivityMainBinding;
-import ch.bbcag.cineboi.room.AppDatabase;
-import ch.bbcag.cineboi.room.Item;
-import ch.bbcag.cineboi.room.ItemDAO;
 import ch.bbcag.cineboi.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
