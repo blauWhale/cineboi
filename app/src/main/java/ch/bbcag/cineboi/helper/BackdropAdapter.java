@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import ch.bbcag.cineboi.R;
 import ch.bbcag.cineboi.model.Film;
 
-public class ImageListAdapter extends ArrayAdapter {
+public class BackdropAdapter extends ArrayAdapter {
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<Film> imageUrls;
 
-    public ImageListAdapter(Context context, ArrayList<Film> films) {
+    public BackdropAdapter(Context context, ArrayList<Film> films) {
         super(context, R.layout.listview_item_image, films);
         this.context = context;
         this.imageUrls = films;
@@ -30,7 +30,7 @@ public class ImageListAdapter extends ArrayAdapter {
         if (null == convertView) {
             convertView = inflater.inflate(R.layout.listview_item_image, parent, false);
         }
-        Glide.with(context).load(imageUrls.get(position).getPoster_Path()).into((ImageView) convertView);
+        Glide.with(context).load(imageUrls.get(position).getBackdrop()).into((ImageView) convertView);
         return convertView;
     }
 }

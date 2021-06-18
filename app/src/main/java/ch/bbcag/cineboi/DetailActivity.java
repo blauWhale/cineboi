@@ -2,7 +2,6 @@ package ch.bbcag.cineboi;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +18,8 @@ import org.json.JSONException;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
 import ch.bbcag.cineboi.room.AppDatabase;
-import ch.bbcag.cineboi.room.favFilmDAO;
+import ch.bbcag.cineboi.room.FavFilmDAO;
+import ch.bbcag.cineboi.room.FavoriteFilm;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -39,7 +39,7 @@ public class DetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true); }
-        database = Room.databaseBuilder(this, AppDatabase.class, "cineboi.db").allowMainThreadQueries().build();
+        database = AppDatabase.getInstance(getApplicationContext());
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -90,7 +90,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void addToFavFilm(View view) {
-        favFilmDAO favFilmDAO = database.getFavFilmDAO();
-        //favFilmDAO.insert(film.getId());
+        FavFilmDAO favFilmDAO = database.getFavFilmDAO();
+        favFilmDAO.insert(new FavoriteFilm(this.id));
     }
 }

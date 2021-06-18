@@ -1,8 +1,11 @@
 package ch.bbcag.cineboi.model;
 
-import java.nio.file.attribute.PosixFileAttributes;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 
 public class Film {
+
     private int id;
     private String name, poster_Path, overview, backdrop, info;
     private static final String POSTER_PATH_URL = "https://www.themoviedb.org/t/p/w500";
