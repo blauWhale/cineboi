@@ -42,15 +42,18 @@ public class DiscoverFragment extends Fragment{
     private BottomSheetDialog bottomSheetDialog;
     private LinearLayout bottomsheetcontainer;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getFilmPosters(API_URL + api_query);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getFilmPosters(API_URL + api_query);
         bottomSheetDialog = new BottomSheetDialog(getActivity());
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_persistent);
         bottomsheetcontainer = bottomSheetDialog.findViewById(R.id.bottom_sheet);
         getActivity().setTitle("Discover");
-
         View v = inflater.inflate(R.layout.fragment_discover, container, false);
         Button btnCountry = v.findViewById(R.id.country_filter);
         Button btnGenre = v.findViewById(R.id.genre_filter);

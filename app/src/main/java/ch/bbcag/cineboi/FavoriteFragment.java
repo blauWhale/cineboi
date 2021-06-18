@@ -36,28 +36,36 @@ public class FavoriteFragment extends Fragment {
 
     private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&";
     AppDatabase database;
-    ArrayList<Film> favoriteFilms;
+    ArrayList<Film> favoriteFilms = new ArrayList<>();
     View v;
+    private BackdropAdapter filmAdapter;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getFavoriteFilmPosters();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         database = AppDatabase.getInstance(getActivity().getApplicationContext());
         v = inflater.inflate(R.layout.fragment_favorite, container, false);
-        getFavoriteFilmPosters();
         return v;
     }
 
     private void getFavoriteFilmPosters() {
         FavFilmDAO favFilmDAO = database.getFavFilmDAO();
-        List<FavoriteFilm> fid = favFilmDAO.getAll();
-        for (FavoriteFilm i : fid) {
-            String url = create_API_URL(i.getFilmID());
+        List<FavoriteFilm> favoriteFilmList = favFilmDAO.getAll();
+        for (FavoriteFilm favoriteFilm : favoriteFilmList) {
+            String url = create_API_URL(favoriteFilm.getFilmID());
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
                         try {
                             Film film = TMDB_Parser.getFilmDetailFromJsonString(response);
                             favoriteFilms.add(film);
-                        } catch (JSONException e) {
+                            filmAdapter.notifyDataSetChanged();
+
+                        } catch (Exception e) {
                             generateAlertDialog();
                             e.printStackTrace();
                         }
@@ -65,7 +73,7 @@ public class FavoriteFragment extends Fragment {
             queue.add(stringRequest);
         }
         GridView gridView = v.findViewById(R.id.backdropList);
-        BackdropAdapter filmAdapter = new BackdropAdapter(getActivity(), favoriteFilms);
+        filmAdapter = new BackdropAdapter(getActivity(), favoriteFilms);
         gridView.setAdapter(filmAdapter);
         AdapterView.OnItemClickListener mListClickedHandler = (parent, v, position, id) -> {
             Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
