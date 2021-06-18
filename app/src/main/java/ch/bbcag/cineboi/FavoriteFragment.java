@@ -56,6 +56,7 @@ public class FavoriteFragment extends Fragment {
     private void getFavoriteFilmPosters() {
         FavFilmDAO favFilmDAO = database.getFavFilmDAO();
         List<FavoriteFilm> favoriteFilmList = favFilmDAO.getAll();
+        favoriteFilms.clear();
         for (FavoriteFilm favoriteFilm : favoriteFilmList) {
             String url = create_API_URL(favoriteFilm.getFilmID());
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
@@ -78,7 +79,8 @@ public class FavoriteFragment extends Fragment {
         AdapterView.OnItemClickListener mListClickedHandler = (parent, v, position, id) -> {
             Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
             Film selected = (Film) parent.getItemAtPosition(position);
-            intent.putExtra("FilmId", selected.getId());
+            int fid = selected.getId();
+            intent.putExtra("FilmId", fid);
             intent.putExtra("Filmname", selected.getName());
             startActivity(intent);
         };

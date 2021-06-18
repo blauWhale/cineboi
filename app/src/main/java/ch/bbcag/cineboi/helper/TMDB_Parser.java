@@ -18,9 +18,7 @@ public class TMDB_Parser {
         {
             Film film = new Film();
             JSONObject subObj = results.getJSONObject(i);
-            film.setId(Integer.parseInt(subObj.getString("id")));
-            film.setName(subObj.getString("original_title"));
-            film.setPoster_Path(subObj.getString("poster_path"));
+            setStandardValue(film, subObj);
             filmlist.add(film);
         }
         return filmlist;
@@ -30,12 +28,17 @@ public class TMDB_Parser {
     public static Film getFilmDetailFromJsonString(String filmJsonString) throws JSONException {
         JSONObject jsonObj = new JSONObject(filmJsonString);
         Film film = new Film();
-        film.setName(jsonObj.getString("original_title"));
-        film.setPoster_Path(jsonObj.getString("poster_path"));
+        setStandardValue(film, jsonObj);
         film.setOverview(jsonObj.getString("overview"));
         film.setBackdrop(jsonObj.getString("backdrop_path"));
         film.setInfo("Length:"+jsonObj.getString("runtime")+"min\nLanguage:" +jsonObj.getString("original_language"));
         return film;
+    }
+
+    public static void setStandardValue(Film film, JSONObject jsonObj) throws JSONException {
+        film.setId(Integer.parseInt(jsonObj.getString("id")));
+        film.setName(jsonObj.getString("original_title"));
+        film.setPoster_Path(jsonObj.getString("poster_path"));
     }
 
     public static HashMap<String, String> getFilmGenresFromJsonString(String filmJsonString) throws JSONException{

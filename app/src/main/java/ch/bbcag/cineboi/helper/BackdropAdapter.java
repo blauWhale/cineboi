@@ -30,7 +30,7 @@ public class BackdropAdapter extends ArrayAdapter {
         if (null == convertView) {
             convertView = inflater.inflate(R.layout.listview_item_image, parent, false);
         }
-        Glide.with(context).load(imageUrls.get(position).getBackdrop()).into((ImageView) convertView);
+        Glide.with(context).load(imageUrls.get(position).getBackdrop()).centerCrop().into((ImageView) convertView);
         return convertView;
     }
 }

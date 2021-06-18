@@ -1,11 +1,8 @@
 package ch.bbcag.cineboi.room;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import ch.bbcag.cineboi.model.Film;
 
 @Entity(tableName = "favorite_films")
 public class FavoriteFilm {

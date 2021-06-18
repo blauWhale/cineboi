@@ -36,10 +36,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 fragment = new DiscoverFragment();
                 break;
             case 1:
-                fragment = new WatchlistFragment();
+                fragment = new FavoriteFragment();
                 break;
             case 2:
-                fragment = new FavoriteFragment();
+                fragment = new WatchlistFragment();
                 break;
 
         }
