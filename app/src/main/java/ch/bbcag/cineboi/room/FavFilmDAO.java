@@ -16,4 +16,10 @@ public interface FavFilmDAO {
 
     @Insert
     void insert(FavoriteFilm film);
+
+    @Query("SELECT * FROM favorite_films WHERE filmID = :id")
+    boolean checkFilmInFavorite(int id);
+
+    @Query("DELETE FROM favorite_films WHERE filmID = :id")
+    void removeFilmFromFavorite(int id);
 }

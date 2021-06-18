@@ -4,6 +4,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.json.JSONException;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
@@ -24,8 +28,8 @@ import ch.bbcag.cineboi.room.FavoriteFilm;
 public class DetailActivity extends AppCompatActivity {
 
     private int id;
-    private AppDatabase database;
     private Film film;
+    private FavFilmDAO favFilmDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,8 @@ public class DetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true); }
-        database = AppDatabase.getInstance(getApplicationContext());
+
+        favFilmDAO = AppDatabase.getInstance(getApplicationContext()).getFavFilmDAO();
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -49,6 +54,12 @@ public class DetailActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isFavorite();
     }
 
     private void getFilmDetails(){
@@ -90,7 +101,24 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void addToFavFilm(View view) {
-        FavFilmDAO favFilmDAO = database.getFavFilmDAO();
+
         favFilmDAO.insert(new FavoriteFilm(this.id));
+        onStart();
+    }
+
+    public void RemoveToFavFilm(View view) {
+        favFilmDAO.removeFilmFromFavorite(this.id);
+        onStart();
+    }
+
+    public void isFavorite(){
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        if (favFilmDAO.checkFilmInFavorite(this.id)){
+            fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(255, 0, 0)));
+            fab.setOnClickListener(this::RemoveToFavFilm);
+        }else{
+            fab.setOnClickListener(this::addToFavFilm);
+            fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(3, 218, 197)));
+        }
     }
 }
