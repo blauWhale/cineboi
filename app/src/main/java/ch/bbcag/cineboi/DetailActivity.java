@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.android.volley.Request;
@@ -26,12 +27,15 @@ import ch.bbcag.cineboi.model.Film;
 import ch.bbcag.cineboi.room.AppDatabase;
 import ch.bbcag.cineboi.room.FavFilmDAO;
 import ch.bbcag.cineboi.room.FavoriteFilm;
+import ch.bbcag.cineboi.room.WatchlistFilm;
+import ch.bbcag.cineboi.room.WatchlistFilmDAO;
 
 public class DetailActivity extends AppCompatActivity {
 
     private int id;
     private Film film;
     private FavFilmDAO favFilmDAO;
+    private WatchlistFilmDAO watchlistFilmDAO;
     private AlertDialogHelper alertDialogHelper;
 
     @Override
@@ -48,6 +52,7 @@ public class DetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true); }
 
         favFilmDAO = AppDatabase.getInstance(getApplicationContext()).getFavFilmDAO();
+        watchlistFilmDAO = AppDatabase.getInstance(getApplicationContext()).getWatchlistFilmDAO();
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -63,6 +68,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         isFavorite();
+        isOnWatchlist();
     }
 
     private void getFilmDetails(){
@@ -112,6 +118,27 @@ public class DetailActivity extends AppCompatActivity {
         }else{
             fab.setOnClickListener(this::addToFavFilm);
             fab.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(3, 218, 197)));
+        }
+    }
+    public void addToWatchlist(View view) {
+
+        watchlistFilmDAO.insert(new WatchlistFilm(this.id));
+        onStart();
+    }
+
+    public void removeFromWatchlist(View view) {
+        watchlistFilmDAO.removeFilmFromWatchlist(this.id);
+        onStart();
+    }
+
+    public void isOnWatchlist(){
+        Button watchlistBtn = findViewById(R.id.watchlist_btn);
+        if (watchlistFilmDAO.checkFilmInWatchlist(this.id)){
+            watchlistBtn.setText(R.string.in_watchlist);
+            watchlistBtn.setOnClickListener(this::removeFromWatchlist);
+        }else{
+            watchlistBtn.setOnClickListener(this::addToWatchlist);
+            watchlistBtn.setText(R.string.add_to_watchlist);
         }
     }
 }

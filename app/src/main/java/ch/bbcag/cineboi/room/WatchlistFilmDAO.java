@@ -14,4 +14,10 @@ public interface WatchlistFilmDAO {
 
     @Insert
     void insert(WatchlistFilm film);
+
+    @Query("SELECT * FROM watchlist_films WHERE filmID = :id")
+    boolean checkFilmInWatchlist(int id);
+
+    @Query("DELETE FROM watchlist_films WHERE filmID = :id")
+    void removeFilmFromWatchlist(int id);
 }
