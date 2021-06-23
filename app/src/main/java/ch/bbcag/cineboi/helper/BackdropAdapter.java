@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -17,12 +19,14 @@ public class BackdropAdapter extends ArrayAdapter {
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<Film> imageUrls;
+    private View view;
 
-    public BackdropAdapter(Context context, ArrayList<Film> films) {
-        super(context, R.layout.listview_item_image, films);
+    public BackdropAdapter(Context context, ArrayList<Film> films, View view) {
+        super(context, R.layout.image_text_overlay, films);
         this.context = context;
         this.imageUrls = films;
         inflater = LayoutInflater.from(context);
+        this.view = view;
     }
 
     @Override
@@ -31,6 +35,7 @@ public class BackdropAdapter extends ArrayAdapter {
             convertView = inflater.inflate(R.layout.listview_item_image, parent, false);
         }
         Glide.with(context).load(imageUrls.get(position).getBackdrop()).centerCrop().into((ImageView) convertView);
+
         return convertView;
     }
 }

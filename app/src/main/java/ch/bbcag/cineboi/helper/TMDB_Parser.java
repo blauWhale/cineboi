@@ -55,7 +55,7 @@ public class TMDB_Parser {
     public static HashMap<String, String> getFilmCountriesFromJsonString(String filmJsonString) throws JSONException{
         JSONObject jsonObj = new JSONObject(filmJsonString);
         JSONArray results = jsonObj.getJSONArray("results");
-        HashMap<String, String> countries = new HashMap<String, String>();
+        HashMap<String, String> countries = new HashMap<>();
         for(int i = 0; i < results.length(); i++)
         {
             JSONObject subObj = results.getJSONObject(i);
