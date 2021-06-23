@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.BackdropAdapter;
 import ch.bbcag.cineboi.helper.ImageListAdapter;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
@@ -39,6 +40,7 @@ public class FavoriteFragment extends Fragment {
     ArrayList<Film> favoriteFilms = new ArrayList<>();
     View v;
     private BackdropAdapter filmAdapter;
+    private AlertDialogHelper alertDialogHelper;
 
     @Override
     public void onStart() {
@@ -67,10 +69,10 @@ public class FavoriteFragment extends Fragment {
                             filmAdapter.notifyDataSetChanged();
 
                         } catch (Exception e) {
-                            generateAlertDialog();
+                            alertDialogHelper.generateAlertDialog(getActivity());
                             e.printStackTrace();
                         }
-                    }, error -> generateAlertDialog());
+                    }, error -> alertDialogHelper.generateAlertDialog(getActivity()));
             queue.add(stringRequest);
         }
         GridView gridView = v.findViewById(R.id.backdropList);
@@ -85,17 +87,6 @@ public class FavoriteFragment extends Fragment {
             startActivity(intent);
         };
         gridView.setOnItemClickListener(mListClickedHandler);
-    }
-
-    private void generateAlertDialog() {
-        AlertDialog.Builder dialogBuilder;
-        dialogBuilder = new AlertDialog.Builder(getActivity());
-        dialogBuilder.setPositiveButton("Ok", (dialog, id) -> {
-            getActivity().finish();
-        });
-        dialogBuilder.setMessage("Die Filme konnten nicht geladen werden. Versuche es später nochmals.").setTitle("Fehler");
-        AlertDialog dialog = dialogBuilder.create();
-        dialog.show();
     }
 
     public String create_API_URL(int id) {

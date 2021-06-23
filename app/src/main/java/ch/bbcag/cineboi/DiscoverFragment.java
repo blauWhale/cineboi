@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.ImageListAdapter;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
@@ -41,6 +43,7 @@ public class DiscoverFragment extends Fragment{
     private String api_query = "sort_by=popularity.desc";
     private BottomSheetDialog bottomSheetDialog;
     private LinearLayout bottomsheetcontainer;
+    private AlertDialogHelper alertDialogHelper;
 
     @Override
     public void onStart() {
@@ -105,22 +108,13 @@ public class DiscoverFragment extends Fragment{
                         };
                         gridView.setOnItemClickListener(mListClickedHandler);
                     } catch (JSONException e) {
-                        generateAlertDialog();
+                        alertDialogHelper.generateAlertDialog(getActivity());
                         e.printStackTrace();
                     }
-                }, error -> generateAlertDialog());
+                }, error -> alertDialogHelper.generateAlertDialog(getActivity()));
         queue.add(stringRequest);
     }
-    private void generateAlertDialog() {
-        AlertDialog.Builder dialogBuilder;
-        dialogBuilder = new AlertDialog.Builder(getActivity());
-        dialogBuilder.setPositiveButton("Ok", (dialog, id) -> {
-            getActivity().finish();
-        });
-        dialogBuilder.setMessage("Die Filme konnten nicht geladen werden. Versuche es später nochmals.").setTitle("Fehler");
-        AlertDialog dialog = dialogBuilder.create();
-        dialog.show();
-    }
+
 
 
     public void filterGenres(View view) {
@@ -207,10 +201,10 @@ public class DiscoverFragment extends Fragment{
                         generateView(genres, API_ADDITION_GENRE, R.id.genre_filter);
 
                     } catch (JSONException e) {
-                        generateAlertDialog();
+                        alertDialogHelper.generateAlertDialog(getActivity());
                         e.printStackTrace();
                     }
-                }, error -> generateAlertDialog());
+                }, error ->  alertDialogHelper.generateAlertDialog(getActivity()));
         queue.add(stringRequest);
     }
 
@@ -224,10 +218,10 @@ public class DiscoverFragment extends Fragment{
                         generateView(countries, API_ADDITION_COUNTRY, R.id.country_filter);
 
                     } catch (JSONException e) {
-                        generateAlertDialog();
+                        alertDialogHelper.generateAlertDialog(getActivity());;
                         e.printStackTrace();
                     }
-                }, error -> generateAlertDialog());
+                }, error ->  alertDialogHelper.generateAlertDialog(getActivity()));
         queue.add(stringRequest);
     }
 

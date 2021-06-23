@@ -19,6 +19,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
+
+import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
 import ch.bbcag.cineboi.room.AppDatabase;
@@ -30,6 +32,7 @@ public class DetailActivity extends AppCompatActivity {
     private int id;
     private Film film;
     private FavFilmDAO favFilmDAO;
+    private AlertDialogHelper alertDialogHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +81,10 @@ public class DetailActivity extends AppCompatActivity {
                         Glide.with(this).load(film.getPoster_Path()).into(imageView2);
                         Glide.with(this).load(film.getBackdrop()).centerCrop().into(imageView1);
                     } catch (JSONException e) {
-                        generateAlertDialog();
+                        alertDialogHelper.generateAlertDialog(this);
                         e.printStackTrace();
                     }
-                }, error -> generateAlertDialog());
+                }, error -> alertDialogHelper.generateAlertDialog(this));
         queue.add(stringRequest);
     }
 
@@ -89,16 +92,6 @@ public class DetailActivity extends AppCompatActivity {
         return "https://api.themoviedb.org/3/movie/" + id + "?api_key=fa11728f6e81c5f05fb42f521fb71283";
     }
 
-    private void generateAlertDialog() {
-        AlertDialog.Builder dialogBuilder;
-        dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setPositiveButton("Ok", (dialog, id) -> {
-            finish();
-        });
-        dialogBuilder.setMessage("Die Filmdetails konnten nicht geladen werden. Versuche es später nochmals.").setTitle("Fehler");
-        AlertDialog dialog = dialogBuilder.create();
-        dialog.show();
-    }
 
     public void addToFavFilm(View view) {
 
