@@ -12,3 +12,9 @@ API Anbindung, Ansprechendes Design, Speicherung der Daten über die Laufzeit hi
 •	Kollaborative Watchlists mit Firebase<br>
 •	Separate Cineboi Bewertung mit Firebase
 
+## GUI
+
+![cineboi photo1](Admin/Mockups/photo1.png?raw=true)
+
+![cineboi photo2](README_Images/photo2.png?raw=true)
+
