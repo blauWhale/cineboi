@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -64,7 +66,8 @@ public class FavoriteFragment extends Fragment {
             queue.add(stringRequest);
         }
         GridView gridView = v.findViewById(R.id.backdropList);
-        filmAdapter = new BackdropAdapter(getActivity(), favoriteFilms);
+        filmAdapter = new BackdropAdapter(getActivity(), favoriteFilms, v);
+
         gridView.setAdapter(filmAdapter);
         AdapterView.OnItemClickListener mListClickedHandler = (parent, v, position, id) -> {
             Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
