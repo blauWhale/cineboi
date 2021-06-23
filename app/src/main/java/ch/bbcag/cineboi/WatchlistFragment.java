@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 
 import com.android.volley.Request;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.WatchListRecyclerAdapter;
@@ -40,11 +42,15 @@ public class WatchlistFragment extends Fragment {
     private ArrayList<Film> watchlistFilms = new ArrayList<>();
     private AlertDialogHelper alertDialogHelper;
     private WatchListRecyclerAdapter filmAdapter;
+    private WatchlistFilmDAO watchlistFilmDAO;
 
     @Override
     public void onStart() {
         super.onStart();
         getWatchlistFilmPosters();
+
+//        Button removeBtn = v.findViewById(R.id.remove_watchlistbtn);
+//        removeBtn.setOnClickListener(this::removeFromWatchlist);
     }
 
     @Override
@@ -52,11 +58,13 @@ public class WatchlistFragment extends Fragment {
         getActivity().setTitle("Watchlist");
         database = AppDatabase.getInstance(getActivity().getApplicationContext());
         v =  inflater.inflate(R.layout.fragment_watchlist, container, false);
+
+
         return v;
     }
 
     private void getWatchlistFilmPosters() {
-        WatchlistFilmDAO watchlistFilmDAO = database.getWatchlistFilmDAO();
+        watchlistFilmDAO = database.getWatchlistFilmDAO();
         List<WatchlistFilm> watchlistFilmList = watchlistFilmDAO.getAll();
         watchlistFilms.clear();
         for (WatchlistFilm watchlistFilm : watchlistFilmList) {
@@ -88,9 +96,15 @@ public class WatchlistFragment extends Fragment {
 //            startActivity(intent);
 ////        };
 //        gridView.setOnItemClickListener(mListClickedHandler);
+
     }
 
     public String create_API_URL(int id) {
         return "https://api.themoviedb.org/3/movie/" + id + "?api_key=fa11728f6e81c5f05fb42f521fb71283";
+    }
+
+    public void removeFromWatchlist(View view) {
+//        watchlistFilmDAO.removeFilmFromWatchlist(getId());
+        onStart();
     }
 }
