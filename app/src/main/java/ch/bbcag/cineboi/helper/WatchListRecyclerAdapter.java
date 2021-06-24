@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,10 +21,12 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
 
     private List<Film> localDataSet;
     private Context context;
+    WatchlistClickListener callback;
 
-    public WatchListRecyclerAdapter(List<Film> dataSet, Context context) {
+    public WatchListRecyclerAdapter(List<Film> dataSet, Context context, WatchlistClickListener callback) {
         localDataSet = dataSet;
         this.context = context;
+        this.callback = callback;
     }
 
     // Create new views (invoked by the layout manager)
@@ -33,7 +36,7 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recyclerview_item, viewGroup, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, callback);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -54,18 +57,26 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
         return localDataSet.size();
     }
 
+    public Film getItemAt(int pos) {
+        return localDataSet.get(pos);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView filmTitle;
         private final TextView filmDescription;
         private final ImageView filmPoster;
+        private WatchlistClickListener callback;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, WatchlistClickListener callback) {
             super(view);
             // Define click listener for the ViewHolder's View
-
+            this.callback = callback;
             filmTitle = (TextView) view.findViewById(R.id.watchlist_title);
             filmDescription = (TextView) view.findViewById(R.id.watchlist_overview);
             filmPoster = (ImageView) view.findViewById(R.id.watchlist_poster);
+
+            Button btn = view.findViewById(R.id.remove_watchlistbtn);
+            btn.setOnClickListener(v -> callback.onClick(getAdapterPosition()));
         }
 
         public TextView getFilmTitle() {
@@ -79,6 +90,11 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
         public ImageView getFilmPoster() {
             return filmPoster;
         }
+
+    }
+
+    public interface WatchlistClickListener{
+        void onClick(int pos);
     }
 }
 

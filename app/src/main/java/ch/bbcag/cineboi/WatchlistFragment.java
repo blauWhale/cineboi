@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +49,6 @@ public class WatchlistFragment extends Fragment {
     public void onStart() {
         super.onStart();
         getWatchlistFilmPosters();
-
-//        Button removeBtn = v.findViewById(R.id.remove_watchlistbtn);
-//        removeBtn.setOnClickListener(this::removeFromWatchlist);
     }
 
     @Override
@@ -85,17 +83,11 @@ public class WatchlistFragment extends Fragment {
         }
         RecyclerView recyclerView = v.findViewById(R.id.recyclerview_watchlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        filmAdapter = new WatchListRecyclerAdapter(watchlistFilms, getActivity());
+        filmAdapter = new WatchListRecyclerAdapter(watchlistFilms, getActivity(), pos -> {
+            Film film = filmAdapter.getItemAt(pos);
+            removeFromWatchlist(v, film.getId());
+        });
         recyclerView.setAdapter(filmAdapter);
-//        AdapterView.OnItemClickListener mListClickedHandler = (parent, v, position, id) -> {
-//            Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
-//            Film selected = (Film) parent.getItemAtPosition(position);
-//            int fid = selected.getId();
-//            intent.putExtra("FilmId", fid);
-//            intent.putExtra("Filmname", selected.getName());
-//            startActivity(intent);
-////        };
-//        gridView.setOnItemClickListener(mListClickedHandler);
 
     }
 
@@ -103,8 +95,8 @@ public class WatchlistFragment extends Fragment {
         return "https://api.themoviedb.org/3/movie/" + id + "?api_key=fa11728f6e81c5f05fb42f521fb71283";
     }
 
-    public void removeFromWatchlist(View view) {
-//        watchlistFilmDAO.removeFilmFromWatchlist(getId());
+    public void removeFromWatchlist(View view, int id) {
+        watchlistFilmDAO.removeFilmFromWatchlist(id);
         onStart();
     }
 }

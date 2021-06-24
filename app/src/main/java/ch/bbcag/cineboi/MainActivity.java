@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Cineboi");
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_baselinel_fire_24);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_star_24);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_library_add_24);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_baseline_favorite_24);
     }
 }
