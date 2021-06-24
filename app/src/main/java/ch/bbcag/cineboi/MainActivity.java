@@ -3,6 +3,8 @@ package ch.bbcag.cineboi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
+import android.widget.SearchView;
+
 import com.google.android.material.tabs.TabLayout;
 import ch.bbcag.cineboi.databinding.ActivityMainBinding;
 import ch.bbcag.cineboi.ui.main.SectionsPagerAdapter;
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
         getSupportActionBar().hide();
         setTitle("Cineboi");
+        SearchView searchView = findViewById(R.id.searchView);
+        searchView.setMaxWidth(700);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_baselinel_fire_24);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_library_add_24);

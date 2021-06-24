@@ -83,9 +83,18 @@ public class WatchlistFragment extends Fragment {
         }
         RecyclerView recyclerView = v.findViewById(R.id.recyclerview_watchlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        filmAdapter = new WatchListRecyclerAdapter(watchlistFilms, getActivity(), pos -> {
+        filmAdapter = new WatchListRecyclerAdapter(watchlistFilms, getActivity(), (pos, view) -> {
             Film film = filmAdapter.getItemAt(pos);
-            removeFromWatchlist(v, film.getId());
+            if (view == R.id.watchlist_btn){
+                removeFromWatchlist(v, film.getId());
+            }
+            if (view == R.id.watchlist_poster){
+                Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
+                int fid = film.getId();
+                intent.putExtra("FilmId", fid);
+                intent.putExtra("Filmname", film.getName());
+                startActivity(intent);
+            }
         });
         recyclerView.setAdapter(filmAdapter);
 

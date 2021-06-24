@@ -76,9 +76,9 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
             filmPoster = (ImageView) view.findViewById(R.id.watchlist_poster);
 
             Button btn = view.findViewById(R.id.remove_watchlistbtn);
-            btn.setOnClickListener(v -> callback.onClick(getAdapterPosition()));
+            btn.setOnClickListener(v -> callback.onClick(getAdapterPosition(), R.id.remove_watchlistbtn));
 
-            filmPoster.setOnClickListener(v -> callback.onClick(getAdapterPosition()));
+            filmPoster.setOnClickListener(v -> callback.onClick(getAdapterPosition(), R.id.watchlist_poster));
         }
 
         public TextView getFilmTitle() {
@@ -96,7 +96,7 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
     }
 
     public interface WatchlistClickListener{
-        void onClick(int pos);
+        void onClick(int pos, int view);
     }
 }
 
