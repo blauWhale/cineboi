@@ -1,6 +1,5 @@
 package ch.bbcag.cineboi;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -30,7 +29,6 @@ import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.ImageListAdapter;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
-
 
 public class DiscoverFragment extends Fragment{
     private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&";
@@ -108,6 +106,7 @@ public class DiscoverFragment extends Fragment{
                         };
                         gridView.setOnItemClickListener(mListClickedHandler);
                     } catch (JSONException e) {
+                        alertDialogHelper = new AlertDialogHelper();
                         alertDialogHelper.generateAlertDialog(getActivity());
                         e.printStackTrace();
                     }
@@ -131,9 +130,9 @@ public class DiscoverFragment extends Fragment{
     }
 
     public void filterRelease(View view) {
-        ConstraintLayout constraintLayout = (ConstraintLayout) getActivity().findViewById(R.id.numberpicker_constraint);
+        ConstraintLayout constraintLayout = getActivity().findViewById(R.id.numberpicker_constraint);
         constraintLayout.setVisibility(View.VISIBLE);
-        Button resetbtn = (Button) getActivity().findViewById(R.id.reset_button);
+        Button resetbtn = getActivity().findViewById(R.id.reset_button);
         resetbtn.setVisibility(View.INVISIBLE);
 
         NumberPicker np = getActivity().findViewById(R.id.numberPicker);
@@ -143,23 +142,20 @@ public class DiscoverFragment extends Fragment{
         Button ok = (Button) getActivity().findViewById(R.id.yearpicker_button);
         np.setVisibility(View.VISIBLE);
         ok.setVisibility(View.VISIBLE);
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int yearValue = np.getValue();
-                setApi_query(getApi_query()+ "&year="+ yearValue);
-                Button btn = (Button) getActivity().findViewById(R.id.release_filter);
-                btn.setText(Integer.toString(np.getValue()));
-                //np.setValue(yearValue);
-                getFilmPosters(API_URL + api_query);
-                np.setVisibility(View.INVISIBLE);
-                ok.setVisibility(View.INVISIBLE);
-                Button resetbtn = (Button) getActivity().findViewById(R.id.reset_button);
-                constraintLayout.setVisibility(View.INVISIBLE);
-                resetbtn.setVisibility(View.VISIBLE);
+        ok.setOnClickListener(v -> {
+            int yearValue = np.getValue();
+            setApi_query(getApi_query()+ "&year="+ yearValue);
+            Button btn = getActivity().findViewById(R.id.release_filter);
+            btn.setText(Integer.toString(np.getValue()));
+            //np.setValue(yearValue);
+            getFilmPosters(API_URL + api_query);
+            np.setVisibility(View.INVISIBLE);
+            ok.setVisibility(View.INVISIBLE);
+            Button resetbtn1 = getActivity().findViewById(R.id.reset_button);
+            constraintLayout.setVisibility(View.INVISIBLE);
+            resetbtn1.setVisibility(View.VISIBLE);
 
-                }
-        });
+            });
 
     }
 
