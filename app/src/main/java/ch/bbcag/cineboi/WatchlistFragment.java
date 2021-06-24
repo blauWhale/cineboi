@@ -85,7 +85,7 @@ public class WatchlistFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         filmAdapter = new WatchListRecyclerAdapter(watchlistFilms, getActivity(), (pos, view) -> {
             Film film = filmAdapter.getItemAt(pos);
-            if (view == R.id.watchlist_btn){
+            if (view == R.id.remove_watchlistbtn){
                 removeFromWatchlist(v, film.getId());
             }
             if (view == R.id.watchlist_poster){
