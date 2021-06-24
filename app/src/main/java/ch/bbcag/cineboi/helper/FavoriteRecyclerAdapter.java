@@ -17,13 +17,13 @@ import java.util.List;
 import ch.bbcag.cineboi.R;
 import ch.bbcag.cineboi.model.Film;
 
-public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecyclerAdapter.ViewHolder> {
+public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecyclerAdapter.ViewHolder> {
 
     private List<Film> localDataSet;
     private Context context;
-    WatchlistClickListener callback;
+    FavoriteClickListener callback;
 
-    public WatchListRecyclerAdapter(List<Film> dataSet, Context context, WatchlistClickListener callback) {
+    public FavoriteRecyclerAdapter(List<Film> dataSet, Context context, FavoriteClickListener callback) {
         localDataSet = dataSet;
         this.context = context;
         this.callback = callback;
@@ -34,7 +34,7 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.recyclerview_item, viewGroup, false);
+                .inflate(R.layout.image_text_overlay, viewGroup, false);
 
         return new ViewHolder(view, callback);
     }
@@ -47,8 +47,7 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
         // contents of the view with that element
         Film film = localDataSet.get(position);
         viewHolder.getFilmTitle().setText(film.getName());
-        viewHolder.getFilmDescription().setText(film.getOverview());
-        Glide.with(context).load(film.getPoster_Path()).centerCrop().into((ImageView) viewHolder.getFilmPoster());
+        Glide.with(context).load(film.getBackdrop()).centerCrop().into((ImageView) viewHolder.getFilmPoster());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -63,20 +62,15 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView filmTitle;
-        private final TextView filmDescription;
         private final ImageView filmPoster;
-        private WatchlistClickListener callback;
+        private FavoriteClickListener callback;
 
-        public ViewHolder(View view, WatchlistClickListener callback) {
+        public ViewHolder(View view, FavoriteClickListener callback) {
             super(view);
             // Define click listener for the ViewHolder's View
             this.callback = callback;
-            filmTitle = (TextView) view.findViewById(R.id.watchlist_title);
-            filmDescription = (TextView) view.findViewById(R.id.watchlist_overview);
-            filmPoster = (ImageView) view.findViewById(R.id.watchlist_poster);
-
-            Button btn = view.findViewById(R.id.remove_watchlistbtn);
-            btn.setOnClickListener(v -> callback.onClick(getAdapterPosition()));
+            filmTitle = (TextView) view.findViewById(R.id.favorite_title);
+            filmPoster = (ImageView) view.findViewById(R.id.favorite_image);
 
             filmPoster.setOnClickListener(v -> callback.onClick(getAdapterPosition()));
         }
@@ -85,17 +79,13 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
             return filmTitle;
         }
 
-        public TextView getFilmDescription() {
-            return filmDescription;
-        }
-
         public ImageView getFilmPoster() {
             return filmPoster;
         }
 
     }
 
-    public interface WatchlistClickListener{
+    public interface FavoriteClickListener {
         void onClick(int pos);
     }
 }

@@ -3,12 +3,14 @@ package ch.bbcag.cineboi;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.BackdropAdapter;
+import ch.bbcag.cineboi.helper.FavoriteRecyclerAdapter;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
 import ch.bbcag.cineboi.room.AppDatabase;
@@ -28,7 +31,7 @@ public class FavoriteFragment extends Fragment {
     AppDatabase database;
     ArrayList<Film> favoriteFilms = new ArrayList<>();
     View v;
-    private BackdropAdapter filmAdapter;
+    private FavoriteRecyclerAdapter filmAdapter;
     private AlertDialogHelper alertDialogHelper;
 
     @Override
@@ -65,19 +68,17 @@ public class FavoriteFragment extends Fragment {
                     }, error -> alertDialogHelper.generateAlertDialog(getActivity()));
             queue.add(stringRequest);
         }
-        GridView gridView = v.findViewById(R.id.backdropList);
-        filmAdapter = new BackdropAdapter(getActivity(), favoriteFilms, v);
-
-        gridView.setAdapter(filmAdapter);
-        AdapterView.OnItemClickListener mListClickedHandler = (parent, v, position, id) -> {
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerview_favoritelist);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        filmAdapter = new FavoriteRecyclerAdapter(favoriteFilms,getActivity(),pos -> {
+            Film film = filmAdapter.getItemAt(pos);
             Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
-            Film selected = (Film) parent.getItemAtPosition(position);
-            int fid = selected.getId();
+            int fid = film.getId();
             intent.putExtra("FilmId", fid);
-            intent.putExtra("Filmname", selected.getName());
+            intent.putExtra("Filmname", film.getName());
             startActivity(intent);
-        };
-        gridView.setOnItemClickListener(mListClickedHandler);
+        });
+        recyclerView.setAdapter(filmAdapter);
     }
 
     public String create_API_URL(int id) {

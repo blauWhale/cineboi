@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import ch.bbcag.cineboi.R;
@@ -36,9 +34,9 @@ public class BackdropAdapter extends ArrayAdapter {
         if (null == convertView) {
             convertView = inflater.inflate(R.layout.image_text_overlay, parent, false);
         }
-        ImageView backdrop = view.findViewById(R.id.imageView);
+        ImageView backdrop = view.findViewById(R.id.favorite_image);
         Glide.with(context).load(imageUrls.get(position).getBackdrop()).centerCrop().into(backdrop);
-        TextView title = view.findViewById(R.id.textView);
+        TextView title = view.findViewById(R.id.favorite_title);
         title.setText(imageUrls.get(position).getName());
         return convertView;
     }
