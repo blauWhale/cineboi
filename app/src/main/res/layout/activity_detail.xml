@@ -37,12 +37,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/poster2"
-        app:layout_constraintTop_toBottomOf="@+id/poster1"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/poster1" />
 
 
     <Button
@@ -51,7 +49,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/add_to_watchlist"
+        app:layout_constraintBottom_toTopOf="@+id/title_l"
         app:layout_constraintStart_toEndOf="@+id/poster2"
         app:layout_constraintTop_toBottomOf="@+id/info" />
 
@@ -60,7 +60,7 @@
         android:layout_width="334dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:textSize="20sp"
         android:textStyle="bold"
