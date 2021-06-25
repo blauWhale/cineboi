@@ -9,6 +9,7 @@ public class Film {
     private int id;
     private String name, poster_Path, overview, backdrop, info;
     private static final String POSTER_PATH_URL = "https://www.themoviedb.org/t/p/w500";
+    private int rating;
 
     public void setId(int id) {
         this.id = id;
@@ -56,5 +57,13 @@ public class Film {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getRating() {
+        return rating;
     }
 }

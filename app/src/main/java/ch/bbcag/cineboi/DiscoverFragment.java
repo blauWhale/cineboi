@@ -155,9 +155,7 @@ public class DiscoverFragment extends Fragment{
             Button resetbtn1 = getActivity().findViewById(R.id.reset_button);
             constraintLayout.setVisibility(View.INVISIBLE);
             resetbtn1.setVisibility(View.VISIBLE);
-
             });
-
     }
 
 

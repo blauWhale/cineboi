@@ -71,10 +71,9 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
             super(view);
             // Define click listener for the ViewHolder's View
             this.callback = callback;
-            filmTitle = (TextView) view.findViewById(R.id.watchlist_title);
-            filmDescription = (TextView) view.findViewById(R.id.watchlist_overview);
-            filmPoster = (ImageView) view.findViewById(R.id.watchlist_poster);
-
+            filmTitle = view.findViewById(R.id.watchlist_title);
+            filmDescription = view.findViewById(R.id.watchlist_overview);
+            filmPoster = view.findViewById(R.id.watchlist_poster);
             Button btn = view.findViewById(R.id.remove_watchlistbtn);
             btn.setOnClickListener(v -> callback.onClick(getAdapterPosition(), R.id.remove_watchlistbtn));
 
@@ -98,5 +97,6 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
     public interface WatchlistClickListener{
         void onClick(int pos, int view);
     }
+
 }
 
