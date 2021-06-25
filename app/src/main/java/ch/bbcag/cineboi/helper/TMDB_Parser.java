@@ -58,7 +58,7 @@ public class TMDB_Parser {
         Map sortedgenres = sortByValues(genres);
         return sortedgenres;
     }
-    public static TreeMap<String, String> getFilmCountriesFromJsonString(String filmJsonString) throws JSONException{
+    public static Map<String, String> getFilmCountriesFromJsonString(String filmJsonString) throws JSONException{
         JSONObject jsonObj = new JSONObject(filmJsonString);
         JSONArray results = jsonObj.getJSONArray("results");
         TreeMap<String, String> countries = new TreeMap<>();
@@ -67,7 +67,8 @@ public class TMDB_Parser {
             JSONObject subObj = results.getJSONObject(i);
             countries.put(subObj.getString("iso_3166_1"), subObj.getString("native_name"));
         }
-        return countries;
+        Map sortedcountries = sortByValues(countries);
+        return sortedcountries;
     }
 
     public static <K, V extends Comparable<V>> Map<K, V> sortByValues(final Map<K, V> map) {

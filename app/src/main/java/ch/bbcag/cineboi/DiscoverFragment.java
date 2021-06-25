@@ -211,7 +211,7 @@ public class DiscoverFragment extends Fragment{
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
-                        TreeMap<String, String> countries = TMDB_Parser.getFilmCountriesFromJsonString(response);
+                        Map<String, String> countries = TMDB_Parser.getFilmCountriesFromJsonString(response);
                         generateView(countries, API_ADDITION_COUNTRY, R.id.country_filter);
 
                     } catch (JSONException e) {
