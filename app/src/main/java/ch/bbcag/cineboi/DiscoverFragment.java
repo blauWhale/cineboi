@@ -86,6 +86,7 @@ public class DiscoverFragment extends Fragment{
                 return false;
             }
         });
+
         return v;
     }
     private void getFilmPosters(String url)

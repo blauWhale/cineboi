@@ -37,7 +37,7 @@ public class TMDB_Parser {
         film.setOverview(jsonObj.getString("overview"));
         film.setBackdrop(jsonObj.getString("backdrop_path"));
         film.setRating(jsonObj.getInt("vote_average"));
-        film.setInfo("Length:"+jsonObj.getString("runtime")+"min\nLanguage:" +jsonObj.getString("original_language"));
+        film.setInfo("Length:"+jsonObj.getString("runtime")+"min\nLanguage:" +jsonObj.getString("original_language")+"\nRating:" +jsonObj.getString("vote_average")+"\nRelease Date:" +jsonObj.getString("release_date"));
         return film;
     }
 
