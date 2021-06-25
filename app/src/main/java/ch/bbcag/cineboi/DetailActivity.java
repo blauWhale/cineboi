@@ -79,9 +79,11 @@ public class DetailActivity extends AppCompatActivity {
                         TextView title_l = findViewById(R.id.title_l);
                         TextView info = findViewById(R.id.info);
                         TextView overview = findViewById(R.id.overview);
+                        TextView rating = findViewById(R.id.Rating);
                         title_l.setText(film.getName());
                         overview.setText(film.getOverview());
                         info.setText(film.getInfo());
+                        rating.setText("Vote Average: "+film.getRating());
                         ImageView imageView2 = findViewById(R.id.poster2);
                         ImageView imageView1 = findViewById(R.id.poster1);
                         Glide.with(this).load(film.getPoster_Path()).into(imageView2);
