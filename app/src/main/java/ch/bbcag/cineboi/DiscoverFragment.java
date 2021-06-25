@@ -96,7 +96,7 @@ public class DiscoverFragment extends Fragment{
                     try {
                         ArrayList<Film> films = TMDB_Parser.createFilmFromJsonString(response);
                         GridView gridView = getActivity().findViewById(R.id.gridview);
-                        ImageListAdapter filmAdapter = new ImageListAdapter(getActivity(), films);
+                        ImageListAdapter filmAdapter = new ImageListAdapter(getContext(), films);
                         gridView.setAdapter(filmAdapter);
                         AdapterView.OnItemClickListener mListClickedHandler = (parent, v, position, id) -> {
                             Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
