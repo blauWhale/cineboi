@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 
 import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.ImageListAdapter;
@@ -193,7 +194,7 @@ public class DiscoverFragment extends Fragment{
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
-                        HashMap<String, String> genres = TMDB_Parser.getFilmGenresFromJsonString(response);
+                        Map<String, String> genres = TMDB_Parser.getFilmGenresFromJsonString(response);
                         generateView(genres, API_ADDITION_GENRE, R.id.genre_filter);
 
                     } catch (JSONException e) {
@@ -210,7 +211,7 @@ public class DiscoverFragment extends Fragment{
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
-                        HashMap<String, String> countries = TMDB_Parser.getFilmCountriesFromJsonString(response);
+                        TreeMap<String, String> countries = TMDB_Parser.getFilmCountriesFromJsonString(response);
                         generateView(countries, API_ADDITION_COUNTRY, R.id.country_filter);
 
                     } catch (JSONException e) {
@@ -221,7 +222,7 @@ public class DiscoverFragment extends Fragment{
         queue.add(stringRequest);
     }
 
-    private void generateView(HashMap<String, String> map, String searchItem, int idButton) {
+    private void generateView(Map<String, String> map, String searchItem, int idButton) {
         Iterator it = map.entrySet().iterator();
 
         while (it.hasNext()) {
