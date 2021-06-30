@@ -1,6 +1,6 @@
 package ch.bbcag.cineboi;
 
-import android.content.Intent;
+import  android.content.Intent;
 import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -29,14 +29,13 @@ import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
 
 public class DiscoverFragment extends Fragment{
-    private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&";
+    private static final String API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283";
     private static final String API_URL_GENRE = "https://api.themoviedb.org/3/genre/movie/list?api_key=fa11728f6e81c5f05fb42f521fb71283";
     private static final String API_URL_COUNTRIES = "https://api.themoviedb.org/3/watch/providers/regions?api_key=fa11728f6e81c5f05fb42f521fb71283";
     private static final String API_ADDITION_GENRE = "&with_genres=";
     private static final String API_ADDITION_COUNTRY = "&region=";
-    private static final String API_URL_SEARCH = "https://api.themoviedb.org/3/search/movie?api_key=fa11728f6e81c5f05fb42f521fb71283";
-    private static final String API_ADDITION_SEARCH = "&query=";
-    private String api_query = "sort_by=popularity.desc";
+    private static final String API_URL_SEARCH = "https://api.themoviedb.org/3/search/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&query=";
+    private String api_query = "&sort_by=popularity.desc";
     private BottomSheetDialog bottomSheetDialog;
     private LinearLayout bottomsheetcontainer;
     private AlertDialogHelper alertDialogHelper = new AlertDialogHelper();
@@ -66,8 +65,7 @@ public class DiscoverFragment extends Fragment{
         simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                api_query = API_ADDITION_SEARCH + simpleSearchView.getQuery();
-                getFilmPosters(API_URL_SEARCH +  simpleSearchView.getQuery());
+                getFilmPosters(API_URL_SEARCH +  query);
                 return false;
             }
 
@@ -77,8 +75,7 @@ public class DiscoverFragment extends Fragment{
                     getFilmPosters(API_URL + api_query);
                 }
                 else{
-                    api_query = API_ADDITION_SEARCH + simpleSearchView.getQuery();
-                    getFilmPosters(API_URL_SEARCH + api_query);
+                    getFilmPosters(API_URL_SEARCH + newText);
                 }
                 return false;
             }
@@ -157,7 +154,7 @@ public class DiscoverFragment extends Fragment{
 
 
     public void filterReset(View view) {
-        setApi_query("sort_by=popularity.desc");
+        setApi_query("&sort_by=popularity.desc");
         getFilmPosters(API_URL + api_query);
 
         Button btn = getActivity().findViewById(R.id.genre_filter);
@@ -221,24 +218,21 @@ public class DiscoverFragment extends Fragment{
 
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-
             LinearLayout linearLayout  = new LinearLayout(getActivity());
             linearLayout.setPaddingRelative(8,8,8,8);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-
             TextView textView = new TextView(getActivity());
             textView.setText((String) pair.getValue());
             textView.setPaddingRelative(8,8,8,8);
             textView.setTextSize(25);
             linearLayout.addView(textView);
-
             linearLayout.setOnClickListener(v -> {
                 setApi_query(getApi_query() + searchItem + pair.getKey());
                 getFilmPosters(API_URL + api_query);
                 bottomSheetDialog.hide();
-                Button btn = (Button) getActivity().findViewById(idButton);
+                Button btn = getActivity().findViewById(idButton);
                 btn.setText(pair.getValue().toString());
-                Button resetbtn = (Button) getActivity().findViewById(R.id.reset_button);
+                Button resetbtn = getActivity().findViewById(R.id.reset_button);
                 resetbtn.setVisibility(View.VISIBLE);
             });
             bottomsheetcontainer.addView(linearLayout);
