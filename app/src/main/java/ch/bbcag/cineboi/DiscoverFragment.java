@@ -21,11 +21,8 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import org.json.JSONException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.TreeMap;
-
 import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.ImageListAdapter;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
@@ -42,7 +39,7 @@ public class DiscoverFragment extends Fragment{
     private String api_query = "sort_by=popularity.desc";
     private BottomSheetDialog bottomSheetDialog;
     private LinearLayout bottomsheetcontainer;
-    private AlertDialogHelper alertDialogHelper;
+    private AlertDialogHelper alertDialogHelper = new AlertDialogHelper();
 
     @Override
     public void onStart() {
@@ -70,7 +67,7 @@ public class DiscoverFragment extends Fragment{
             @Override
             public boolean onQueryTextSubmit(String query) {
                 api_query = API_ADDITION_SEARCH + simpleSearchView.getQuery();
-                getFilmPosters(API_URL_SEARCH + api_query);
+                getFilmPosters(API_URL_SEARCH +  simpleSearchView.getQuery());
                 return false;
             }
 
@@ -108,7 +105,7 @@ public class DiscoverFragment extends Fragment{
                         };
                         gridView.setOnItemClickListener(mListClickedHandler);
                     } catch (JSONException e) {
-                        alertDialogHelper = new AlertDialogHelper();
+
                         alertDialogHelper.generateAlertDialog(getActivity());
                         e.printStackTrace();
                     }
@@ -136,12 +133,11 @@ public class DiscoverFragment extends Fragment{
         constraintLayout.setVisibility(View.VISIBLE);
         Button resetbtn = getActivity().findViewById(R.id.reset_button);
         resetbtn.setVisibility(View.INVISIBLE);
-
         NumberPicker np = getActivity().findViewById(R.id.numberPicker);
         np.setMinValue(1900);
         np.setMaxValue(2100);
         np.setValue(2021);
-        Button ok = (Button) getActivity().findViewById(R.id.yearpicker_button);
+        Button ok = getActivity().findViewById(R.id.yearpicker_button);
         np.setVisibility(View.VISIBLE);
         ok.setVisibility(View.VISIBLE);
         ok.setOnClickListener(v -> {
@@ -149,7 +145,6 @@ public class DiscoverFragment extends Fragment{
             setApi_query(getApi_query()+ "&year="+ yearValue);
             Button btn = getActivity().findViewById(R.id.release_filter);
             btn.setText(Integer.toString(np.getValue()));
-            //np.setValue(yearValue);
             getFilmPosters(API_URL + api_query);
             np.setVisibility(View.INVISIBLE);
             ok.setVisibility(View.INVISIBLE);
@@ -165,16 +160,16 @@ public class DiscoverFragment extends Fragment{
         setApi_query("sort_by=popularity.desc");
         getFilmPosters(API_URL + api_query);
 
-        Button btn = (Button) getActivity().findViewById(R.id.genre_filter);
+        Button btn = getActivity().findViewById(R.id.genre_filter);
         btn.setText(R.string.button_genre);
 
-        Button btn2 = (Button) getActivity().findViewById(R.id.country_filter);
+        Button btn2 = getActivity().findViewById(R.id.country_filter);
         btn2.setText(R.string.button_countries);
 
-        Button btn3 = (Button) getActivity().findViewById(R.id.release_filter);
+        Button btn3 = getActivity().findViewById(R.id.release_filter);
         btn3.setText(R.string.button_release_year);
 
-        Button resetbtn = (Button) getActivity().findViewById(R.id.reset_button);
+        Button resetbtn = getActivity().findViewById(R.id.reset_button);
         resetbtn.setVisibility(View.INVISIBLE);
     }
 

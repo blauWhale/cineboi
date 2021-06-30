@@ -1,14 +1,12 @@
 package ch.bbcag.cineboi.helper;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import ch.bbcag.cineboi.model.Film;
@@ -56,8 +54,7 @@ public class TMDB_Parser {
             JSONObject subObj = results.getJSONObject(i);
             genres.put(subObj.getString("id"), subObj.getString("name"));
         }
-        Map sortedgenres = sortByValues(genres);
-        return sortedgenres;
+        return sortByValues(genres);
     }
     public static Map<String, String> getFilmCountriesFromJsonString(String filmJsonString) throws JSONException{
         JSONObject jsonObj = new JSONObject(filmJsonString);
@@ -68,25 +65,20 @@ public class TMDB_Parser {
             JSONObject subObj = results.getJSONObject(i);
             countries.put(subObj.getString("iso_3166_1"), subObj.getString("native_name"));
         }
-        Map sortedcountries = sortByValues(countries);
-        return sortedcountries;
+        return sortByValues(countries);
     }
 
     public static <K, V extends Comparable<V>> Map<K, V> sortByValues(final Map<K, V> map) {
-        Comparator<K> valueComparator =
-                new Comparator<K>() {
-                    public int compare(K k1, K k2) {
-                        int compare =
-                                map.get(k1).compareTo(map.get(k2));
-                        if (compare == 0)
-                            return 1;
-                        else
-                            return compare;
-                    }
-                };
+        Comparator<K> valueComparator = (k1, k2) -> {
+            int compare =
+                    Objects.requireNonNull(map.get(k1)).compareTo(map.get(k2));
+            if (compare == 0)
+                return 1;
+            else
+                return compare;
+        };
 
-        Map<K, V> sortedByValues =
-                new TreeMap<K, V>(valueComparator);
+        Map<K, V> sortedByValues = new TreeMap<>(valueComparator);
         sortedByValues.putAll(map);
         return sortedByValues;
     }
