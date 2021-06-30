@@ -18,4 +18,6 @@
     <string name="add_to_watchlist">+ watchlist</string>
     <string name="in_watchlist">in watchlist</string>
     <string name="remove">- remove</string>
+    <string name="default_message_favorite">No Favorite Film...</string>
+    <string name="default_message_watchlist">No film in watchlist yet...</string>
 </resources>

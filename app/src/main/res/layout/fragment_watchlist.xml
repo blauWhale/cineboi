@@ -7,6 +7,18 @@
     tools:context=".WatchlistFragment">
 
 
+    <TextView
+        android:id="@+id/message2"
+        android:layout_width="268dp"
+        android:layout_height="58dp"
+        android:text="@string/default_message_watchlist"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_watchlist"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerview_watchlist"
+        app:layout_constraintStart_toStartOf="@+id/recyclerview_watchlist"
+        app:layout_constraintTop_toTopOf="@+id/recyclerview_watchlist" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_watchlist"
         android:layout_width="match_parent"

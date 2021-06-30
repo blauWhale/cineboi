@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Objects;
 
 import ch.bbcag.cineboi.helper.AlertDialogHelper;
+import ch.bbcag.cineboi.helper.FavoriteRecyclerAdapter;
 import ch.bbcag.cineboi.helper.WatchListRecyclerAdapter;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
@@ -65,39 +67,49 @@ public class WatchlistFragment extends Fragment {
         watchlistFilmDAO = database.getWatchlistFilmDAO();
         List<WatchlistFilm> watchlistFilmList = watchlistFilmDAO.getAll();
         watchlistFilms.clear();
-        for (WatchlistFilm watchlistFilm : watchlistFilmList) {
-            String url = create_API_URL(watchlistFilm.getFilmID());
-            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
-                try {
-                    Film film = TMDB_Parser.getFilmDetailFromJsonString(response);
-                    watchlistFilms.add(film);
-                    filmAdapter.notifyDataSetChanged();
+        TextView message = v.findViewById(R.id.message2);
+        if (watchlistFilmList.size() != 0) {
 
-                } catch (Exception e) {
-                    alertDialogHelper.generateAlertDialog(getActivity());
-                    e.printStackTrace();
+            message.setVisibility(View.INVISIBLE);
+            for (WatchlistFilm watchlistFilm : watchlistFilmList) {
+                String url = create_API_URL(watchlistFilm.getFilmID());
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
+                    try {
+                        Film film = TMDB_Parser.getFilmDetailFromJsonString(response);
+                        watchlistFilms.add(film);
+                        filmAdapter.notifyDataSetChanged();
+
+                    } catch (Exception e) {
+                        alertDialogHelper.generateAlertDialog(getActivity());
+                        e.printStackTrace();
+                    }
+                }, error -> alertDialogHelper.generateAlertDialog(getActivity()));
+                queue.add(stringRequest);
+            }
+            RecyclerView recyclerView = v.findViewById(R.id.recyclerview_watchlist);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            filmAdapter = new WatchListRecyclerAdapter(watchlistFilms, getActivity(), (pos, view) -> {
+                Film film = filmAdapter.getItemAt(pos);
+                if (view == R.id.remove_watchlistbtn){
+                    removeFromWatchlist(v, film.getId());
                 }
-            }, error -> alertDialogHelper.generateAlertDialog(getActivity()));
-            queue.add(stringRequest);
-        }
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerview_watchlist);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        filmAdapter = new WatchListRecyclerAdapter(watchlistFilms, getActivity(), (pos, view) -> {
-            Film film = filmAdapter.getItemAt(pos);
-            if (view == R.id.remove_watchlistbtn){
-                removeFromWatchlist(v, film.getId());
-            }
-            if (view == R.id.watchlist_poster){
-                Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
-                int fid = film.getId();
-                intent.putExtra("FilmId", fid);
-                intent.putExtra("Filmname", film.getName());
-                startActivity(intent);
-            }
-        });
-        recyclerView.setAdapter(filmAdapter);
+                if (view == R.id.watchlist_poster){
+                    Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
+                    int fid = film.getId();
+                    intent.putExtra("FilmId", fid);
+                    intent.putExtra("Filmname", film.getName());
+                    startActivity(intent);
+                }
+            });
+            recyclerView.setAdapter(filmAdapter);
 
+        }else{
+            if(filmAdapter != null){
+                filmAdapter.notifyDataSetChanged();
+            }
+            message.setVisibility(View.VISIBLE);
+        }
     }
 
     public String create_API_URL(int id) {
