@@ -2,48 +2,34 @@ package ch.bbcag.cineboi;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import ch.bbcag.cineboi.helper.AlertDialogHelper;
-import ch.bbcag.cineboi.helper.FavoriteRecyclerAdapter;
+import ch.bbcag.cineboi.helper.ApiHelper;
 import ch.bbcag.cineboi.helper.WatchListRecyclerAdapter;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
 import ch.bbcag.cineboi.room.AppDatabase;
-import ch.bbcag.cineboi.room.FavFilmDAO;
-import ch.bbcag.cineboi.room.FavoriteFilm;
 import ch.bbcag.cineboi.room.WatchlistFilm;
 import ch.bbcag.cineboi.room.WatchlistFilmDAO;
 
-
 public class WatchlistFragment extends Fragment {
     private View v;
-    private RecyclerView recyclerView;
     private AppDatabase database;
     private ArrayList<Film> watchlistFilms = new ArrayList<>();
-    private AlertDialogHelper alertDialogHelper;
     private WatchListRecyclerAdapter filmAdapter;
     private WatchlistFilmDAO watchlistFilmDAO;
 
@@ -58,22 +44,21 @@ public class WatchlistFragment extends Fragment {
         getActivity().setTitle("Watchlist");
         database = AppDatabase.getInstance(getActivity().getApplicationContext());
         v =  inflater.inflate(R.layout.fragment_watchlist, container, false);
-
-
         return v;
     }
 
     private void getWatchlistFilmPosters() {
+        AlertDialogHelper alertDialogHelper = new AlertDialogHelper();
+        ApiHelper apiHelper = new ApiHelper();
         watchlistFilmDAO = database.getWatchlistFilmDAO();
         List<WatchlistFilm> watchlistFilmList = watchlistFilmDAO.getAll();
         watchlistFilms.clear();
         TextView message = v.findViewById(R.id.message2);
         if (watchlistFilmList.size() != 0) {
-
             message.setVisibility(View.INVISIBLE);
             for (WatchlistFilm watchlistFilm : watchlistFilmList) {
-                String url = create_API_URL(watchlistFilm.getFilmID());
-                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                String url = apiHelper.create_API_URL(watchlistFilm.getFilmID());
+                RequestQueue queue = Volley.newRequestQueue(requireActivity().getApplicationContext());
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
                     try {
                         Film film = TMDB_Parser.getFilmDetailFromJsonString(response);
@@ -92,10 +77,10 @@ public class WatchlistFragment extends Fragment {
             filmAdapter = new WatchListRecyclerAdapter(watchlistFilms, getActivity(), (pos, view) -> {
                 Film film = filmAdapter.getItemAt(pos);
                 if (view == R.id.remove_watchlistbtn){
-                    removeFromWatchlist(v, film.getId());
+                    removeFromWatchlist(film.getId());
                 }
                 if (view == R.id.watchlist_poster){
-                    Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
+                    Intent intent = new Intent(requireActivity().getApplicationContext(), DetailActivity.class);
                     int fid = film.getId();
                     intent.putExtra("FilmId", fid);
                     intent.putExtra("Filmname", film.getName());
@@ -103,7 +88,6 @@ public class WatchlistFragment extends Fragment {
                 }
             });
             recyclerView.setAdapter(filmAdapter);
-
         }else{
             if(filmAdapter != null){
                 filmAdapter.notifyDataSetChanged();
@@ -112,11 +96,7 @@ public class WatchlistFragment extends Fragment {
         }
     }
 
-    public String create_API_URL(int id) {
-        return "https://api.themoviedb.org/3/movie/" + id + "?api_key=fa11728f6e81c5f05fb42f521fb71283";
-    }
-
-    public void removeFromWatchlist(View view, int id) {
+    public void removeFromWatchlist(int id) {
         watchlistFilmDAO.removeFilmFromWatchlist(id);
         onStart();
     }

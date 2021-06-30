@@ -2,7 +2,6 @@ package ch.bbcag.cineboi;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -18,10 +17,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import org.json.JSONException;
-
 import ch.bbcag.cineboi.helper.AlertDialogHelper;
+import ch.bbcag.cineboi.helper.ApiHelper;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
 import ch.bbcag.cineboi.room.AppDatabase;
@@ -36,7 +34,6 @@ public class DetailActivity extends AppCompatActivity {
     private Film film;
     private FavFilmDAO favFilmDAO;
     private WatchlistFilmDAO watchlistFilmDAO;
-    private AlertDialogHelper alertDialogHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +69,10 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getFilmDetails(){
+        AlertDialogHelper alertDialogHelper = new AlertDialogHelper();
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, create_API_URL(this.id), response -> {
+        ApiHelper apiHelper = new ApiHelper();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, apiHelper.create_API_URL(this.id), response -> {
                     try {
                         film = TMDB_Parser.getFilmDetailFromJsonString(response);
                         TextView title_l = findViewById(R.id.title_l);
@@ -92,10 +91,6 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 }, error -> alertDialogHelper.generateAlertDialog(this));
         queue.add(stringRequest);
-    }
-
-    public  String create_API_URL(int id){
-        return "https://api.themoviedb.org/3/movie/" + id + "?api_key=fa11728f6e81c5f05fb42f521fb71283";
     }
 
 
