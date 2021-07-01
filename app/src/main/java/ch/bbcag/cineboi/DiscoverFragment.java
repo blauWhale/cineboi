@@ -46,11 +46,21 @@ public class DiscoverFragment extends Fragment {
     private BottomSheetDialog bottomSheetDialog;
     private LinearLayout bottomsheetcontainer;
     private AlertDialogHelper alertDialogHelper = new AlertDialogHelper();
+    private SearchView simpleSearchView;
 
     @Override
     public void onStart() {
         super.onStart();
         getFilmPosters(API_URL + api_query);
+        simpleSearchView = getActivity().findViewById(R.id.searchView);
+        simpleSearchView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        simpleSearchView = getActivity().findViewById(R.id.searchView);
+        simpleSearchView.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -68,7 +78,7 @@ public class DiscoverFragment extends Fragment {
         btnGenre.setOnClickListener(this::filterGenres);
         btnYear.setOnClickListener(this::filterRelease);
         btnReset.setOnClickListener(this::filterReset);
-        SearchView simpleSearchView = getActivity().findViewById(R.id.searchView);
+        simpleSearchView = getActivity().findViewById(R.id.searchView);
         simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

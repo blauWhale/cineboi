@@ -102,9 +102,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:visibility="invisible"/>
-        <!--            app:layout_constraintEnd_toEndOf="@+id/gridview"-->
-        <!--            app:layout_constraintStart_toStartOf="@+id/gridview"-->
-        <!--            app:layout_constraintTop_toBottomOf="@+id/numberPicker"-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
