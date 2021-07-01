@@ -2,16 +2,19 @@ package ch.bbcag.cineboi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
 import android.os.Bundle;
 import android.widget.SearchView;
 
 import com.google.android.material.tabs.TabLayout;
+
 import ch.bbcag.cineboi.databinding.ActivityMainBinding;
 import ch.bbcag.cineboi.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

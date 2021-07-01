@@ -10,10 +10,12 @@ import androidx.room.RoomDatabase;
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract FavFilmDAO getFavFilmDAO();
+
     public abstract WatchlistFilmDAO getWatchlistFilmDAO();
 
-    
+
     private static AppDatabase cineboiDB;
+
     public static AppDatabase getInstance(Context context) {
         if (null == cineboiDB) {
             cineboiDB = buildDatabaseInstance(context);

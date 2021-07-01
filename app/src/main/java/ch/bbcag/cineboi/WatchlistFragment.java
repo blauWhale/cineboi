@@ -2,20 +2,23 @@ package ch.bbcag.cineboi;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.ApiHelper;
@@ -43,7 +46,7 @@ public class WatchlistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().setTitle("Watchlist");
         database = AppDatabase.getInstance(getActivity().getApplicationContext());
-        v =  inflater.inflate(R.layout.fragment_watchlist, container, false);
+        v = inflater.inflate(R.layout.fragment_watchlist, container, false);
         return v;
     }
 
@@ -57,7 +60,7 @@ public class WatchlistFragment extends Fragment {
         if (watchlistFilmList.size() != 0) {
             message.setVisibility(View.INVISIBLE);
             for (WatchlistFilm watchlistFilm : watchlistFilmList) {
-                String url = apiHelper.create_API_URL(watchlistFilm.getFilmID());
+                String url = apiHelper.createAPIURL(watchlistFilm.getFilmID());
                 RequestQueue queue = Volley.newRequestQueue(requireActivity().getApplicationContext());
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
                     try {
@@ -76,10 +79,10 @@ public class WatchlistFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             filmAdapter = new WatchListRecyclerAdapter(watchlistFilms, getActivity(), (pos, view) -> {
                 Film film = filmAdapter.getItemAt(pos);
-                if (view == R.id.remove_watchlistbtn){
+                if (view == R.id.remove_watchlistbtn) {
                     removeFromWatchlist(film.getId());
                 }
-                if (view == R.id.watchlist_poster){
+                if (view == R.id.watchlist_poster) {
                     Intent intent = new Intent(requireActivity().getApplicationContext(), DetailActivity.class);
                     int fid = film.getId();
                     intent.putExtra("FilmId", fid);
@@ -88,8 +91,8 @@ public class WatchlistFragment extends Fragment {
                 }
             });
             recyclerView.setAdapter(filmAdapter);
-        }else{
-            if(filmAdapter != null){
+        } else {
+            if (filmAdapter != null) {
                 filmAdapter.notifyDataSetChanged();
             }
             message.setVisibility(View.VISIBLE);

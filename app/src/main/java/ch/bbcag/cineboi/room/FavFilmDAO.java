@@ -6,7 +6,6 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ch.bbcag.cineboi.model.Film;
 
 @Dao
 public interface FavFilmDAO {

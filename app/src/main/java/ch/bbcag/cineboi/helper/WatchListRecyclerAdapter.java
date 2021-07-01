@@ -19,46 +19,40 @@ import ch.bbcag.cineboi.model.Film;
 
 public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecyclerAdapter.ViewHolder> {
 
-    private List<Film> localDataSet;
+    private List<Film> watchlistList;
     private Context context;
     WatchlistClickListener callback;
 
-    public WatchListRecyclerAdapter(List<Film> dataSet, Context context, WatchlistClickListener callback) {
-        localDataSet = dataSet;
+    public WatchListRecyclerAdapter(List<Film> filmList, Context context, WatchlistClickListener callback) {
+        watchlistList = filmList;
         this.context = context;
         this.callback = callback;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recyclerview_item, viewGroup, false);
 
         return new ViewHolder(view, callback);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        Film film = localDataSet.get(position);
+        Film film = watchlistList.get(position);
         viewHolder.getFilmTitle().setText(film.getName());
         viewHolder.getFilmDescription().setText(film.getOverview());
         Glide.with(context).load(film.getPoster_Path()).centerCrop().into((ImageView) viewHolder.getFilmPoster());
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return localDataSet.size();
+        return watchlistList.size();
     }
 
     public Film getItemAt(int pos) {
-        return localDataSet.get(pos);
+        return watchlistList.get(pos);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -69,7 +63,6 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
 
         public ViewHolder(View view, WatchlistClickListener callback) {
             super(view);
-            // Define click listener for the ViewHolder's View
             this.callback = callback;
             filmTitle = view.findViewById(R.id.watchlist_title);
             filmDescription = view.findViewById(R.id.watchlist_overview);
@@ -94,7 +87,7 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
 
     }
 
-    public interface WatchlistClickListener{
+    public interface WatchlistClickListener {
         void onClick(int pos, int view);
     }
 

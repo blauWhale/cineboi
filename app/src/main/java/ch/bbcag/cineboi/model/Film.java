@@ -9,7 +9,7 @@ public class Film {
     private int id;
     private String name, poster_Path, overview, backdrop, info;
     private static final String POSTER_PATH_URL = "https://www.themoviedb.org/t/p/w500";
-    private int rating;
+    private double rating;
 
     public void setId(int id) {
         this.id = id;
@@ -32,7 +32,7 @@ public class Film {
     }
 
     public String getPoster_Path() {
-        return POSTER_PATH_URL+poster_Path;
+        return POSTER_PATH_URL + poster_Path;
     }
 
     public String getOverview() {
@@ -44,7 +44,7 @@ public class Film {
     }
 
     public String getBackdrop() {
-        return POSTER_PATH_URL+backdrop;
+        return POSTER_PATH_URL + backdrop;
     }
 
     public void setBackdrop(String backdrop) {
@@ -59,11 +59,11 @@ public class Film {
         this.info = info;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 }

@@ -7,10 +7,12 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "favorite_films")
 public class FavoriteFilm {
 
-    public FavoriteFilm(int id){
+    public FavoriteFilm(int id) {
         this.filmID = id;
     }
-    public FavoriteFilm(){}
+
+    public FavoriteFilm() {
+    }
 
     @PrimaryKey(autoGenerate = true)
     private int id;

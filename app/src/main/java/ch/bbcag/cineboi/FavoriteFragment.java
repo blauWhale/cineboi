@@ -2,19 +2,24 @@ package ch.bbcag.cineboi;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.ApiHelper;
 import ch.bbcag.cineboi.helper.FavoriteRecyclerAdapter;
@@ -53,7 +58,7 @@ public class FavoriteFragment extends Fragment {
             TextView message = v.findViewById(R.id.message);
             message.setVisibility(View.INVISIBLE);
             for (FavoriteFilm favoriteFilm : favoriteFilmList) {
-                String url = apiHelper.create_API_URL(favoriteFilm.getFilmID());
+                String url = apiHelper.createAPIURL(favoriteFilm.getFilmID());
                 RequestQueue queue = Volley.newRequestQueue(requireActivity().getApplicationContext());
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
                     try {
@@ -79,8 +84,8 @@ public class FavoriteFragment extends Fragment {
                 startActivity(intent);
             });
             recyclerView.setAdapter(filmAdapter);
-        }else{
-            if(filmAdapter != null){
+        } else {
+            if (filmAdapter != null) {
                 filmAdapter.notifyDataSetChanged();
             }
             TextView message = v.findViewById(R.id.message);

@@ -1,9 +1,11 @@
 package ch.bbcag.cineboi;
 
-import  android.content.Intent;
+import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +16,25 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.SearchView;
 import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+
 import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.ImageListAdapter;
 import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
 
-public class DiscoverFragment extends Fragment{
+public class DiscoverFragment extends Fragment {
     private static final String API_HEAD = "https://api.themoviedb.org/3/";
     private static final String API_URL = API_HEAD + "discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283";
     private static final String API_URL_GENRE = API_HEAD + "genre/movie/list?api_key=fa11728f6e81c5f05fb42f521fb71283";
@@ -66,16 +72,15 @@ public class DiscoverFragment extends Fragment{
         simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                getFilmPosters(API_URL_SEARCH +  query);
+                getFilmPosters(API_URL_SEARCH + query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(newText.equals("")){
+                if (newText.equals("")) {
                     getFilmPosters(API_URL + api_query);
-                }
-                else{
+                } else {
                     getFilmPosters(API_URL_SEARCH + newText);
                 }
                 return false;
@@ -84,8 +89,8 @@ public class DiscoverFragment extends Fragment{
 
         return v;
     }
-    private void getFilmPosters(String url)
-    {
+
+    private void getFilmPosters(String url) {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
@@ -103,14 +108,12 @@ public class DiscoverFragment extends Fragment{
                         };
                         gridView.setOnItemClickListener(mListClickedHandler);
                     } catch (JSONException e) {
-
                         alertDialogHelper.generateAlertDialog(getActivity());
                         e.printStackTrace();
                     }
                 }, error -> alertDialogHelper.generateAlertDialog(getActivity()));
         queue.add(stringRequest);
     }
-
 
 
     public void filterGenres(View view) {
@@ -140,7 +143,7 @@ public class DiscoverFragment extends Fragment{
         ok.setVisibility(View.VISIBLE);
         ok.setOnClickListener(v -> {
             int yearValue = np.getValue();
-            setApi_query(getApi_query()+ "&year="+ yearValue);
+            setApi_query(getApi_query() + "&year=" + yearValue);
             Button btn = getActivity().findViewById(R.id.release_filter);
             btn.setText(Integer.toString(np.getValue()));
             getFilmPosters(API_URL + api_query);
@@ -149,39 +152,29 @@ public class DiscoverFragment extends Fragment{
             Button resetbtn1 = getActivity().findViewById(R.id.reset_button);
             constraintLayout.setVisibility(View.INVISIBLE);
             resetbtn1.setVisibility(View.VISIBLE);
-            });
+        });
     }
-
 
 
     public void filterReset(View view) {
         setApi_query("&sort_by=popularity.desc");
         getFilmPosters(API_URL + api_query);
 
-        Button btn = getActivity().findViewById(R.id.genre_filter);
-        btn.setText(R.string.button_genre);
+        Button genreFilterBtn = getActivity().findViewById(R.id.genre_filter);
+        genreFilterBtn.setText(R.string.button_genre);
 
-        Button btn2 = getActivity().findViewById(R.id.country_filter);
-        btn2.setText(R.string.button_countries);
+        Button countryFilterBtn = getActivity().findViewById(R.id.country_filter);
+        countryFilterBtn.setText(R.string.button_countries);
 
-        Button btn3 = getActivity().findViewById(R.id.release_filter);
-        btn3.setText(R.string.button_release_year);
+        Button yearFilterBtn = getActivity().findViewById(R.id.release_filter);
+        yearFilterBtn.setText(R.string.button_release_year);
 
-        Button resetbtn = getActivity().findViewById(R.id.reset_button);
-        resetbtn.setVisibility(View.INVISIBLE);
-    }
-
-    public String getApi_query() {
-        return api_query;
-    }
-
-    public void setApi_query(String api_query) {
-        this.api_query = api_query;
+        Button resetBtn = getActivity().findViewById(R.id.reset_button);
+        resetBtn.setVisibility(View.INVISIBLE);
     }
 
 
-    private void getGenres(String url)
-    {
+    private void getGenres(String url) {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
@@ -193,12 +186,11 @@ public class DiscoverFragment extends Fragment{
                         alertDialogHelper.generateAlertDialog(getActivity());
                         e.printStackTrace();
                     }
-                }, error ->  alertDialogHelper.generateAlertDialog(getActivity()));
+                }, error -> alertDialogHelper.generateAlertDialog(getActivity()));
         queue.add(stringRequest);
     }
 
-    private void getCountries(String url)
-    {
+    private void getCountries(String url) {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
@@ -207,10 +199,11 @@ public class DiscoverFragment extends Fragment{
                         generateView(countries, API_ADDITION_COUNTRY, R.id.country_filter);
 
                     } catch (JSONException e) {
-                        alertDialogHelper.generateAlertDialog(getActivity());;
+                        alertDialogHelper.generateAlertDialog(getActivity());
+                        ;
                         e.printStackTrace();
                     }
-                }, error ->  alertDialogHelper.generateAlertDialog(getActivity()));
+                }, error -> alertDialogHelper.generateAlertDialog(getActivity()));
         queue.add(stringRequest);
     }
 
@@ -218,13 +211,13 @@ public class DiscoverFragment extends Fragment{
         Iterator it = map.entrySet().iterator();
 
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            LinearLayout linearLayout  = new LinearLayout(getActivity());
-            linearLayout.setPaddingRelative(8,8,8,8);
+            Map.Entry pair = (Map.Entry) it.next();
+            LinearLayout linearLayout = new LinearLayout(getActivity());
+            linearLayout.setPaddingRelative(8, 8, 8, 8);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             TextView textView = new TextView(getActivity());
             textView.setText((String) pair.getValue());
-            textView.setPaddingRelative(8,8,8,8);
+            textView.setPaddingRelative(8, 8, 8, 8);
             textView.setTextSize(25);
             linearLayout.addView(textView);
             linearLayout.setOnClickListener(v -> {
@@ -233,10 +226,18 @@ public class DiscoverFragment extends Fragment{
                 bottomSheetDialog.hide();
                 Button btn = getActivity().findViewById(idButton);
                 btn.setText(pair.getValue().toString());
-                Button resetbtn = getActivity().findViewById(R.id.reset_button);
-                resetbtn.setVisibility(View.VISIBLE);
+                Button resetBtn = getActivity().findViewById(R.id.reset_button);
+                resetBtn.setVisibility(View.VISIBLE);
             });
             bottomsheetcontainer.addView(linearLayout);
         }
+    }
+
+    public String getApi_query() {
+        return api_query;
+    }
+
+    public void setApi_query(String api_query) {
+        this.api_query = api_query;
     }
 }

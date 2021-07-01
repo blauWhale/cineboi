@@ -6,10 +6,12 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "watchlist_films")
 public class WatchlistFilm {
 
-    public WatchlistFilm(int id){
+    public WatchlistFilm(int id) {
         this.filmID = id;
     }
-    public WatchlistFilm(){}
+
+    public WatchlistFilm() {
+    }
 
     @PrimaryKey(autoGenerate = true)
     private int id;
