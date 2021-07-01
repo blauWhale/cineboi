@@ -20,7 +20,7 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
 
     private List<Film> favoriteList;
     private Context context;
-    FavoriteClickListener callback;
+    private FavoriteClickListener callback;
 
     public FavoriteRecyclerAdapter(List<Film> filmList, Context context, FavoriteClickListener callback) {
         favoriteList = filmList;

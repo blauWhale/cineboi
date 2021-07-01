@@ -21,7 +21,7 @@ public class WatchListRecyclerAdapter extends RecyclerView.Adapter<WatchListRecy
 
     private List<Film> watchlistList;
     private Context context;
-    WatchlistClickListener callback;
+    private WatchlistClickListener callback;
 
     public WatchListRecyclerAdapter(List<Film> filmList, Context context, WatchlistClickListener callback) {
         watchlistList = filmList;
