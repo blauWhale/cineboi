@@ -18,15 +18,25 @@ API Anbindung, Ansprechendes Design, Speicherung der Daten über die Laufzeit hi
 
 ![cineboi photo2](Admin/Mockups/photo2.png?raw=true)
 
+##Finished GUI Screenshots
+
+![cineboi photo1](Admin/GUI/DiscoverView.jpg?raw=true)
+![cineboi photo1](Admin/GUI/GenreFilter.jpg?raw=true)
+![cineboi photo1](Admin/GUI/ReleaseDateFilter.jpg?raw=true)
+![cineboi photo1](Admin/GUI/Watchlist.jpg?raw=true)
+![cineboi photo1](Admin/GUI/FavoriteList.jpg?raw=true)
+![cineboi photo1](Admin/GUI/DetailViewDefault.jpg?raw=true)
+
+
 ## Developer Documentation
 
 Android Version: 11.0 (R) <br>
 Min. Sdk Version von Android: 28<br>
 Java Version: 1.8.0_291<br>
 
-Für API Request: Volley(1.2.0)<br>
-Verwendete API: The Movie Database API(Version 3)<br>
+Für API Request: Volley (1.2.0)<br>
+Verwendete API: The Movie Database API (Version 3)<br>
 Für diverse ImageAdapter: Glide by Bumptech (4.12.0)<br>
-Für Datenpersistenz: Room(2.3.0)<br>
+Für Datenpersistenz: Room (2.3.0)<br>
 
 

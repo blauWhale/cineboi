@@ -14,7 +14,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/tab1_titel" />
+        app:title="@string/main_title" />
 
     <SearchView
         android:id="@+id/searchView"
