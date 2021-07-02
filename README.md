@@ -19,10 +19,6 @@ API Anbindung, Ansprechendes Design, Speicherung der Daten über die Laufzeit hi
 ![cineboi photo2](Admin/Mockups/photo2.png?raw=true)
 
 ## Finished GUI Screenshots
-<p align="center">
-  <img src="Admin/GUI/GUI%20Screenshots.png">
-</p>
-
 ![cineboi photo1](Admin/GUI/GUI%20Screenshots.png?raw=true)
 
 ## Developer Documentation
