@@ -18,15 +18,9 @@ API Anbindung, Ansprechendes Design, Speicherung der Daten über die Laufzeit hi
 
 ![cineboi photo2](Admin/Mockups/photo2.png?raw=true)
 
-##Finished GUI Screenshots
+## Finished GUI Screenshots
 
-![cineboi photo1](Admin/GUI/DiscoverView.jpg)
-![cineboi photo1](Admin/GUI/GenreFilter.jpg)
-![cineboi photo1](Admin/GUI/ReleaseDateFilter.jpg)
-![cineboi photo1](Admin/GUI/Watchlist.jpg)
-![cineboi photo1](Admin/GUI/FavoriteList.jpg)
-![cineboi photo1](Admin/GUI/DetailViewDefault.jpg)
-
+![cineboi photo1](Admin/GUI/GUI%20Screenshots.png?raw=true)
 
 ## Developer Documentation
 
