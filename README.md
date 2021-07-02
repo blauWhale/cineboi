@@ -12,9 +12,21 @@ API Anbindung, Ansprechendes Design, Speicherung der Daten über die Laufzeit hi
 •	Kollaborative Watchlists mit Firebase<br>
 •	Separate Cineboi Bewertung mit Firebase
 
-## GUI
+## Mockups
 
 ![cineboi photo1](Admin/Mockups/photo1.png?raw=true)
 
 ![cineboi photo2](Admin/Mockups/photo2.png?raw=true)
+
+## Developer Documentation
+
+Android Version: 11.0 (R) <br>
+Min. Sdk Version von Android: 28<br>
+Java Version: 1.8.0_291<br>
+
+Für API Request: Volley(1.2.0)<br>
+Verwendete API: The Movie Database API(Version 3)<br>
+Für diverse ImageAdapter: Glide by Bumptech (4.12.0)<br>
+Für Datenpersistenz: Room(2.3.0)<br>
+
 
