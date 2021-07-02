@@ -2,7 +2,6 @@ package ch.bbcag.cineboi;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -12,16 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import org.json.JSONException;
-
 import ch.bbcag.cineboi.helper.AlertDialogHelper;
 import ch.bbcag.cineboi.helper.ApiHelper;
 import ch.bbcag.cineboi.helper.TMDB_Parser;

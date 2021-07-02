@@ -35,13 +35,14 @@ import ch.bbcag.cineboi.helper.TMDB_Parser;
 import ch.bbcag.cineboi.model.Film;
 
 public class DiscoverFragment extends Fragment {
+    private static final String API_KEY = "?api_key=fa11728f6e81c5f05fb42f521fb71283";
     private static final String API_HEAD = "https://api.themoviedb.org/3/";
-    private static final String API_URL = API_HEAD + "discover/movie?api_key=fa11728f6e81c5f05fb42f521fb71283";
-    private static final String API_URL_GENRE = API_HEAD + "genre/movie/list?api_key=fa11728f6e81c5f05fb42f521fb71283";
-    private static final String API_URL_COUNTRIES = API_HEAD + "watch/providers/regions?api_key=fa11728f6e81c5f05fb42f521fb71283";
+    private static final String API_URL = API_HEAD + "discover/movie"+API_KEY;
+    private static final String API_URL_GENRE = API_HEAD + "genre/movie/list"+API_KEY;
+    private static final String API_URL_COUNTRIES = API_HEAD + "watch/providers/regions"+API_KEY;
     private static final String API_ADDITION_GENRE = "&with_genres=";
     private static final String API_ADDITION_COUNTRY = "&region=";
-    private static final String API_URL_SEARCH = API_HEAD + "search/movie?api_key=fa11728f6e81c5f05fb42f521fb71283&query=";
+    private static final String API_URL_SEARCH = API_HEAD + "search/movie"+API_KEY;
     private String api_query = "&sort_by=popularity.desc";
     private BottomSheetDialog bottomSheetDialog;
     private LinearLayout bottomsheetcontainer;
