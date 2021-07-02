@@ -16,5 +16,5 @@ API Anbindung, Ansprechendes Design, Speicherung der Daten über die Laufzeit hi
 
 ![cineboi photo1](Admin/Mockups/photo1.png?raw=true)
 
-![cineboi photo2](README_Images/photo2.png?raw=true)
+![cineboi photo2](Admin/Mockups/photo2.png?raw=true)
 
