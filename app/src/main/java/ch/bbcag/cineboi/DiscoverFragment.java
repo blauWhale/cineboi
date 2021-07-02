@@ -42,7 +42,7 @@ public class DiscoverFragment extends Fragment {
     private static final String API_URL_COUNTRIES = API_HEAD + "watch/providers/regions"+API_KEY;
     private static final String API_ADDITION_GENRE = "&with_genres=";
     private static final String API_ADDITION_COUNTRY = "&region=";
-    private static final String API_URL_SEARCH = API_HEAD + "search/movie"+API_KEY;
+    private static final String API_URL_SEARCH = API_HEAD + "search/movie"+API_KEY+"&query=";
     private String api_query = "&sort_by=popularity.desc";
     private BottomSheetDialog bottomSheetDialog;
     private LinearLayout bottomsheetcontainer;
